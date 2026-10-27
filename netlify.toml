@@ -1,0 +1,7 @@
+# Netlify bygger en statisk version av sajten med `nuxt generate`.
+[build]
+  command = "npm run generate"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <rect width="1200" height="900" fill="#e3e8eb"/>
+  <rect x="0" y="0" width="1200" height="120" fill="#d2d9de"/>
+  <polygon points="200,800 200,720 330,720 330,640 460,640 460,560 590,560 590,480 720,480 720,400 850,400 850,320 980,320 980,800" fill="#c3cdd4"/>
+  <polyline points="200,620 980,220" fill="none" stroke="#8597a4" stroke-width="12" stroke-linecap="round"/>
+  <g stroke="#9eadb8" stroke-width="8">
+    <line x1="265" y1="720" x2="265" y2="587"/><line x1="395" y1="640" x2="395" y2="520"/><line x1="525" y1="560" x2="525" y2="453"/>
+    <line x1="655" y1="480" x2="655" y2="387"/><line x1="785" y1="400" x2="785" y2="320"/><line x1="915" y1="320" x2="915" y2="253"/>
+  </g>
+  <rect x="540" y="120" width="120" height="16" fill="#a9b6c0"/>
+  <rect y="800" width="1200" height="100" fill="#d2d9de"/>
+  <text x="40" y="860" font-family="Arial, sans-serif" font-size="26" fill="#5f6c78">Platshållarbild</text>
+</svg>
