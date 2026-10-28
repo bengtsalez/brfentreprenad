@@ -17,7 +17,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div class="max-w-prose space-y-4" :class="align === 'center' && 'mx-auto text-center'">
+  <div class="reveal max-w-prose space-y-4" :class="align === 'center' && 'mx-auto text-center'">
     <p v-if="eyebrow" class="eyebrow">
       {{ eyebrow }}
     </p>

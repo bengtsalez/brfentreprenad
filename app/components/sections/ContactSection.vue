@@ -10,11 +10,14 @@ withDefaults(defineProps<{
   lead?: string
   /** Valfri anmärkning under kontaktuppgifterna, t.ex. att de är exempel. */
   contactNote?: string
+  /** Namn i Netlify Forms. Utan namn är formuläret en demonstration. */
+  formName?: string
   headingLevel?: HeadingLevel
 }>(), {
   eyebrow: undefined,
   lead: undefined,
   contactNote: undefined,
+  formName: undefined,
   headingLevel: 2,
 })
 </script>
@@ -40,9 +43,10 @@ withDefaults(defineProps<{
         <UiBadge v-if="contactNote" variant="outline">
           {{ contactNote }}
         </UiBadge>
+        <slot />
       </div>
       <div class="rounded-card border border-line bg-surface p-6 shadow-card sm:p-8">
-        <ContactForm :subject-options="subjectOptions" />
+        <ContactForm :subject-options="subjectOptions" :form-name="formName" />
       </div>
     </div>
   </UiSection>

@@ -59,6 +59,10 @@
   --radius-control: 0.375rem;
   --radius-card: 0.5rem;
   --shadow-card: 0 1px 2px rgb(21 33 44 / 0.06), 0 4px 14px rgb(21 33 44 / 0.05);
+  --shadow-card-hover: 0 2px 4px rgb(21 33 44 / 0.06), 0 12px 28px rgb(21 33 44 / 0.1);
+
+  /* Rörelse */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /*
@@ -84,7 +88,8 @@
   }
 
   html {
-    scroll-padding-top: 1.5rem;
+    /* Sticky header (4.5rem) plus luft. */
+    scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -106,6 +111,105 @@
   :focus-visible {
     outline: 3px solid var(--color-focus);
     outline-offset: 2px;
+  }
+}
+
+/*
+ * Sidövergångar. Länkarna är vanliga <a>, så det är webbläsarens
+ * övergångar mellan dokument som används (ingen JS). Headern har ett eget
+ * view-transition-name och står still medan innehållet tonas över.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 250ms;
+    animation-timing-function: var(--ease-premium);
+  }
+}
+
+/*
+ * Scroll-drivna animationer. Tidslinjen är elementets väg genom viewporten
+ * (view()) eller sidans scroll (scroll()), så ingen JS behövs. Webbläsare
+ * utan stöd och besökare som valt reducerad rörelse ser allt direkt.
+ */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 1.5rem;
+  }
+}
+
+@keyframes parallax {
+  from {
+    transform: scale(1.08) translateY(-3%);
+  }
+  to {
+    transform: scale(1.08) translateY(3%);
+  }
+}
+
+@keyframes grow-x {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+/* Tonar in och glider upp när elementet kommer in i bild. */
+@utility reveal {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 70%;
+    }
+  }
+}
+
+/* Bild som rör sig långsammare än sidan. Lägg den i en behållare med overflow-hidden. */
+@utility parallax {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: parallax linear both;
+      animation-timeline: view();
+    }
+  }
+}
+
+/* Läsprogress: elementet växer från vänster i takt med sidans scroll. */
+@utility scroll-progress {
+  display: none;
+  transform-origin: left;
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      display: block;
+      animation: grow-x linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+/*
+ * Kort entréanimation för menyer. Den startar om varje gång elementet går
+ * från display: none till synligt, alltså även med v-show.
+ */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    translate: 0 -0.375rem;
+  }
+}
+
+@utility pop-in {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: pop-in 200ms var(--ease-premium);
   }
 }
 

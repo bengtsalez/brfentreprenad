@@ -21,7 +21,7 @@ const cardHeadingLevel = computed(() => childHeadingLevel(props.headingLevel))
   <UiSection>
     <UiSectionHeading :title="title" :eyebrow="eyebrow" :lead="lead" :level="headingLevel" />
     <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <li v-for="service in services" :key="service.title">
+      <li v-for="service in services" :key="service.title" class="reveal">
         <UiCard
           :title="service.title"
           :image="service.image"

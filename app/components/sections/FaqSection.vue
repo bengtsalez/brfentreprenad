@@ -43,19 +43,27 @@ function toggle(index: number) {
               {{ item.question }}
               <UiIcon
                 name="chevron-down"
-                class="text-accent motion-safe:transition-transform"
+                class="text-accent motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-premium"
                 :class="openItems.has(index) && 'rotate-180'"
               />
             </button>
           </UiHeading>
+          <!--
+            Höjden animeras med grid-raden (0fr → 1fr). Ett stängt svar är
+            invisible, så det varken läses upp eller kan nås med tab.
+          -->
           <div
-            v-show="openItems.has(index)"
             :id="`${baseId}-answer-${index}`"
             role="region"
             :aria-labelledby="`${baseId}-question-${index}`"
-            class="max-w-prose pb-6 text-ink-muted"
+            class="grid transition-[grid-template-rows,visibility] duration-300 ease-premium"
+            :class="openItems.has(index) ? 'grid-rows-[1fr]' : 'invisible grid-rows-[0fr]'"
           >
-            <p>{{ item.answer }}</p>
+            <div class="overflow-hidden">
+              <p class="max-w-prose pb-6 text-ink-muted">
+                {{ item.answer }}
+              </p>
+            </div>
           </div>
         </div>
       </div>

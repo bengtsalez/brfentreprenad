@@ -8,6 +8,9 @@ import { componentShowcases as ui, sectionShowcases as sections } from '~/build-
  * exempelinnehållet från example-content.ts.
  */
 
+// Byggsidan har en egen ram och använder inte webbplatsens layout.
+definePageMeta({ layout: false })
+
 useSeoMeta({
   title: 'Byggsida',
   description: 'Intern katalog över komponenter och sektioner för BRF Entreprenads hemsida.',

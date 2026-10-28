@@ -11,12 +11,15 @@ const props = withDefaults(defineProps<{
   href?: string
   type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
+  /** Pil efter texten som glider åt höger vid hover. */
+  arrow?: boolean
 }>(), {
   variant: 'primary',
   size: 'md',
   href: undefined,
   type: 'button',
   disabled: false,
+  arrow: false,
 })
 
 const isLink = computed(() => Boolean(props.href) && !props.disabled)
@@ -33,8 +36,9 @@ const sizeClasses: Record<ButtonSize, string> = {
 }
 
 const classes = computed(() => [
-  'inline-flex items-center justify-center gap-2 rounded-control border font-semibold leading-tight text-center',
-  'transition-colors duration-150 disabled:cursor-not-allowed',
+  'group inline-flex items-center justify-center gap-2 rounded-control border font-semibold leading-tight text-center',
+  'transition-[color,background-color,border-color,text-decoration-color,scale] duration-150 ease-premium',
+  'motion-safe:active:scale-[0.98] disabled:cursor-not-allowed disabled:active:scale-100',
   variantClasses[props.variant],
   props.variant === 'text' ? 'min-h-10 px-1' : sizeClasses[props.size],
 ])
@@ -43,8 +47,10 @@ const classes = computed(() => [
 <template>
   <a v-if="isLink" :href="href" :class="classes">
     <slot />
+    <UiIcon v-if="arrow" name="arrow-right" size="sm" class="motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-premium motion-safe:group-hover:translate-x-1" />
   </a>
   <button v-else :type="type" :disabled="disabled" :class="classes">
     <slot />
+    <UiIcon v-if="arrow" name="arrow-right" size="sm" class="motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-premium motion-safe:group-hover:translate-x-1" />
   </button>
 </template>

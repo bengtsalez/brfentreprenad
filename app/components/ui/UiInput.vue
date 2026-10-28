@@ -10,6 +10,7 @@ withDefaults(defineProps<{
   hint?: string
   error?: string
   required?: boolean
+  optional?: boolean
   disabled?: boolean
 }>(), {
   type: 'text',
@@ -22,7 +23,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <UiFormField v-slot="{ id, describedBy, invalid }" :label="label" :hint="hint" :error="error" :required="required">
+  <UiFormField v-slot="{ id, describedBy, invalid }" :label="label" :hint="hint" :error="error" :required="required" :optional="optional">
     <input
       :id="id"
       v-model="model"

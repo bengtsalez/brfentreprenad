@@ -3,19 +3,26 @@ import type { SelectOption } from '~/types/content'
 
 /**
  * Kontaktformulär med enkel klientvalidering.
- * Det finns ingen backend ännu: vid giltig inmatning visas ett
- * demonstrationsmeddelande och ingenting skickas.
+ *
+ * Med `formName` skickas formuläret till Netlify Forms. Netlify hittar formuläret
+ * i den förrenderade HTML:en (data-netlify) och tar emot inskicket på "/".
+ * Bekräftelsen visas bara när Netlify har svarat att uppgifterna tagits emot.
+ * Utan `formName`, och alltid i utvecklingsläge, visas ett demonstrationsmeddelande
+ * och ingenting skickas.
  */
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   subjectOptions: SelectOption[]
   submitLabel?: string
+  formName?: string
 }>(), {
   submitLabel: 'Skicka meddelande',
+  formName: undefined,
 })
 
 interface ContactFormValues {
   name: string
   association: string
+  address: string
   email: string
   phone: string
   subject: string
@@ -29,12 +36,14 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_PATTERN = /^\+?[\d\s-]{7,20}$/
 
 function emptyValues(): ContactFormValues {
-  return { name: '', association: '', email: '', phone: '', subject: '', message: '', consent: false }
+  return { name: '', association: '', address: '', email: '', phone: '', subject: '', message: '', consent: false }
 }
 
 const values = reactive(emptyValues())
 const errors = ref<FormErrors>({})
-const status = ref<'idle' | 'invalid' | 'demo-sent'>('idle')
+const status = ref<'idle' | 'invalid' | 'sending' | 'sent' | 'failed' | 'demo-sent'>('idle')
+const honeypot = ref('')
+const sendsForReal = Boolean(props.formName) && !import.meta.dev
 const form = useTemplateRef<HTMLFormElement>('form')
 const successMessage = useTemplateRef<HTMLDivElement>('successMessage')
 
@@ -77,15 +86,61 @@ async function onSubmit() {
     return
   }
 
-  status.value = 'demo-sent'
+  if (sendsForReal) {
+    status.value = 'sending'
+    status.value = (await submitToNetlify()) ? 'sent' : 'failed'
+    if (status.value === 'failed') return
+  }
+  else {
+    status.value = 'demo-sent'
+  }
+
   Object.assign(values, emptyValues())
   await nextTick()
   successMessage.value?.focus()
 }
+
+async function submitToNetlify(): Promise<boolean> {
+  const { consent, ...fields } = values
+  const body = new URLSearchParams({
+    'form-name': props.formName!,
+    'bot-field': honeypot.value,
+    ...fields,
+    consent: consent ? 'ja' : 'nej',
+  })
+
+  try {
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString(),
+    })
+    return response.ok
+  }
+  catch {
+    return false
+  }
+}
 </script>
 
 <template>
-  <form ref="form" novalidate class="space-y-6" @submit.prevent="onSubmit">
+  <form
+    ref="form"
+    :name="formName"
+    :data-netlify="formName ? 'true' : undefined"
+    :netlify-honeypot="formName ? 'bot-field' : undefined"
+    novalidate
+    class="space-y-6"
+    @submit.prevent="onSubmit"
+  >
+    <template v-if="formName">
+      <input type="hidden" name="form-name" :value="formName">
+      <!-- Fälla för spam. Dold för alla och ska lämnas tom. -->
+      <p class="hidden" aria-hidden="true">
+        <label>Lämna tomt <input v-model="honeypot" name="bot-field" tabindex="-1" autocomplete="off"></label>
+      </p>
+    </template>
+
     <p class="text-sm text-ink-muted">
       Fält markerade med <span class="text-danger" aria-hidden="true">*</span> är obligatoriska.
     </p>
@@ -94,10 +149,18 @@ async function onSubmit() {
       <UiInput v-model="values.name" label="Namn" name="name" autocomplete="name" required :error="errors.name" />
       <UiInput
         v-model="values.association"
-        label="Bostadsrättsförening"
+        label="Förening eller företag"
         name="association"
         autocomplete="organization"
-        hint="Valfritt"
+        optional
+      />
+      <UiInput
+        v-model="values.address"
+        label="Fastighetens adress"
+        name="address"
+        autocomplete="street-address"
+        optional
+        class="sm:col-span-2"
       />
       <UiInput
         v-model="values.email"
@@ -114,7 +177,7 @@ async function onSubmit() {
         type="tel"
         name="phone"
         autocomplete="tel"
-        hint="Valfritt. Fyll i om du hellre vill bli uppringd."
+        required
         :error="errors.phone"
       />
     </div>
@@ -133,7 +196,7 @@ async function onSubmit() {
       v-model="values.message"
       label="Meddelande"
       name="message"
-      hint="Beskriv kort vad föreningen behöver hjälp med."
+      hint="Beskriv kort vad ni behöver hjälp med och när ni önskar att arbetet startar. Skriv inte portkoder här."
       required
       :error="errors.message"
     />
@@ -150,6 +213,14 @@ async function onSubmit() {
       <UiAlert v-if="status === 'invalid' && errorCount > 0" tone="error" title="Formuläret kunde inte skickas">
         Kontrollera {{ errorCount === 1 ? 'det markerade fältet' : `de ${errorCount} markerade fälten` }} och försök igen.
       </UiAlert>
+      <UiAlert v-if="status === 'failed'" tone="error" title="Meddelandet kunde inte skickas">
+        Något gick fel och vi har inte tagit emot uppgifterna. Försök igen om en stund.
+      </UiAlert>
+      <div v-if="status === 'sent'" ref="successMessage" tabindex="-1" class="focus-visible:outline-offset-4">
+        <UiAlert tone="success" title="Tack, vi har tagit emot ert meddelande">
+          Vi återkommer till er. Ett önskemål om starttid är inte en bekräftad planering.
+        </UiAlert>
+      </div>
       <div v-if="status === 'demo-sent'" ref="successMessage" tabindex="-1" class="focus-visible:outline-offset-4">
         <UiAlert tone="success" title="Formuläret är korrekt ifyllt">
           Detta är en demonstration. Inget meddelande har skickats och inga uppgifter har sparats.
@@ -157,8 +228,8 @@ async function onSubmit() {
       </div>
     </div>
 
-    <UiButton type="submit">
-      {{ submitLabel }}
+    <UiButton type="submit" :disabled="status === 'sending'">
+      {{ status === 'sending' ? 'Skickar …' : submitLabel }}
     </UiButton>
   </form>
 </template>

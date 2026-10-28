@@ -27,7 +27,7 @@ const cardHeadingLevel = computed(() => childHeadingLevel(props.headingLevel))
       {{ note }}
     </UiAlert>
     <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <li v-for="project in projects" :key="project.title">
+      <li v-for="project in projects" :key="project.title" class="reveal">
         <UiCard
           :title="project.title"
           :image="project.image"

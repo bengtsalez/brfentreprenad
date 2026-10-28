@@ -34,7 +34,7 @@ withDefaults(defineProps<{
           {{ lead }}
         </p>
         <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap">
-          <UiButton :href="primaryAction.href">
+          <UiButton :href="primaryAction.href" arrow>
             {{ primaryAction.label }}
           </UiButton>
           <UiButton v-if="secondaryAction" :href="secondaryAction.href" variant="secondary">
@@ -48,13 +48,15 @@ withDefaults(defineProps<{
           </li>
         </ul>
       </div>
-      <img
-        :src="image.src"
-        :alt="image.alt"
-        :width="image.width"
-        :height="image.height"
-        class="aspect-[4/3] w-full rounded-card object-cover"
-      >
+      <div class="overflow-hidden rounded-card">
+        <img
+          :src="image.src"
+          :alt="image.alt"
+          :width="image.width"
+          :height="image.height"
+          class="parallax aspect-[4/3] w-full object-cover"
+        >
+      </div>
     </div>
   </UiSection>
 </template>

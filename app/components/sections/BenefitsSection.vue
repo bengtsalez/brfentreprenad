@@ -22,7 +22,7 @@ const itemHeadingLevel = computed(() => childHeadingLevel(props.headingLevel))
     <div class="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
       <UiSectionHeading :title="title" :eyebrow="eyebrow" :lead="lead" :level="headingLevel" />
       <ul class="grid gap-x-10 gap-y-8 sm:grid-cols-2">
-        <li v-for="benefit in benefits" :key="benefit.title" class="space-y-2 border-t-2 border-accent pt-5">
+        <li v-for="benefit in benefits" :key="benefit.title" class="reveal space-y-2 border-t-2 border-accent pt-5">
           <UiHeading :level="itemHeadingLevel" size="sm">
             {{ benefit.title }}
           </UiHeading>

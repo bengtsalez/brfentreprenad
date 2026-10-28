@@ -26,7 +26,7 @@ withDefaults(defineProps<{
         </p>
       </div>
       <div class="flex shrink-0 flex-col gap-3 sm:flex-row">
-        <UiButton :href="primaryAction.href">
+        <UiButton :href="primaryAction.href" arrow>
           {{ primaryAction.label }}
         </UiButton>
         <UiButton v-if="secondaryAction" :href="secondaryAction.href" variant="secondary">

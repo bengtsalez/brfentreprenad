@@ -8,6 +8,7 @@ const props = defineProps<{
   hint?: string
   error?: string
   required?: boolean
+  optional?: boolean
 }>()
 
 defineSlots<{
@@ -27,7 +28,7 @@ const describedBy = computed(() => {
 <template>
   <div class="flex flex-col gap-1.5">
     <label :for="id" class="text-sm font-semibold">
-      {{ label }}<span v-if="required" class="text-danger" aria-hidden="true"> *</span>
+      {{ label }}<span v-if="required" class="text-danger" aria-hidden="true"> *</span><span v-else-if="optional" class="font-normal text-ink-muted"> (valfritt)</span>
     </label>
     <p v-if="hint" :id="hintId" class="text-sm text-ink-muted">
       {{ hint }}

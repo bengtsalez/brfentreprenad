@@ -36,14 +36,16 @@ withDefaults(defineProps<{
           <UiIcon name="arrow-right" size="sm" />
         </UiButton>
       </div>
-      <img
-        :src="image.src"
-        :alt="image.alt"
-        :width="image.width"
-        :height="image.height"
-        loading="lazy"
-        class="aspect-[4/3] w-full rounded-card object-cover"
-      >
+      <div class="overflow-hidden rounded-card">
+        <img
+          :src="image.src"
+          :alt="image.alt"
+          :width="image.width"
+          :height="image.height"
+          loading="lazy"
+          class="parallax aspect-[4/3] w-full object-cover"
+        >
+      </div>
     </div>
   </UiSection>
 </template>

@@ -7,11 +7,14 @@ withDefaults(defineProps<{
   navItems: LinkItem[]
   contactDetails: ContactDetail[]
   legal: string
+  /** Valfri extra kolumn med tjänstelänkar. */
+  serviceItems?: LinkItem[]
   /** Valfri anmärkning under kontaktuppgifterna, t.ex. att de är exempel. */
   contactNote?: string
   logoHref?: string
   headingLevel?: HeadingLevel
 }>(), {
+  serviceItems: () => [],
   contactNote: undefined,
   logoHref: undefined,
   headingLevel: 2,
@@ -20,13 +23,27 @@ withDefaults(defineProps<{
 
 <template>
   <footer class="theme-dark bg-canvas text-ink">
-    <UiContainer class="grid gap-10 py-section-compact md:grid-cols-[2fr_1fr_1fr]">
+    <UiContainer
+      class="grid gap-10 py-section-compact"
+      :class="serviceItems.length ? 'sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]' : 'md:grid-cols-[2fr_1fr_1fr]'"
+    >
       <div class="max-w-sm space-y-4">
         <SiteLogo :href="logoHref" />
         <p class="text-ink-muted">
           {{ description }}
         </p>
       </div>
+
+      <nav v-if="serviceItems.length" aria-label="Tjänster i sidfoten">
+        <UiHeading :level="headingLevel" size="xs" class="mb-4">
+          Tjänster
+        </UiHeading>
+        <ul class="space-y-2">
+          <li v-for="item in serviceItems" :key="item.href">
+            <a :href="item.href" class="text-ink-muted hover:text-ink hover:underline">{{ item.label }}</a>
+          </li>
+        </ul>
+      </nav>
 
       <nav aria-label="Sidfot">
         <UiHeading :level="headingLevel" size="xs" class="mb-4">
