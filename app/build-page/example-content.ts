@@ -5,14 +5,19 @@
  */
 import type {
   BenefitItem,
+  BoardControlItem,
+  CaseStudy,
   ContactDetail,
+  DetailItem,
   FaqItem,
   ImageAsset,
+  InquiryChoice,
   LinkItem,
   ProcessStep,
   ReferenceProject,
   SelectOption,
   ServiceItem,
+  TextBlock,
 } from '~/types/content'
 
 /** Ankare för sektionerna på byggsidan, så att navigation och knappar har mål. */
@@ -225,12 +230,74 @@ export const contact = {
   title: 'Berätta vad föreningen behöver',
   lead: 'Skicka en förfrågan så återkommer en projektledare för att boka ett inledande samtal.',
   contactNote: 'Kontaktuppgifterna är exempel',
-  subjectOptions: [
-    { value: 'service', label: 'Service och underhåll' },
-    { value: 'porttelefoni', label: 'Porttelefoni och passersystem' },
-    { value: 'renovering', label: 'Renovering' },
-    { value: 'annat', label: 'Annat' },
-  ] satisfies SelectOption[],
+}
+
+export const selectOptions: SelectOption[] = [
+  { value: 'service', label: 'Service och underhåll' },
+  { value: 'porttelefoni', label: 'Porttelefoni och passersystem' },
+  { value: 'renovering', label: 'Renovering' },
+  { value: 'annat', label: 'Annat' },
+]
+
+export const trust: ContactDetail[] = [
+  { label: 'Verksamhetsområde', value: 'Exempelort till Exempelort' },
+  { label: 'Arbetssätt', value: 'Exempel på arbetssätt' },
+  { label: 'Kontor', value: 'Exempelgatan 1, Exempelort' },
+  { label: 'Telefon (exempel)', value: '040-000 00 00' },
+]
+
+export const inquiryChoices: InquiryChoice[] = [
+  {
+    eyebrow: 'Planerad renovering',
+    title: 'Föreningen planerar en renovering',
+    description: 'Exempeltext för projektflödet.',
+    examples: ['Fasadrenovering', 'Balkongrenovering'],
+    next: 'Exempel på vad som händer efter att förfrågan skickats.',
+    action: { label: 'Prata med en projektledare', href: anchors.contact },
+  },
+  {
+    eyebrow: 'Fastighetsservice',
+    title: 'Något behöver lagas',
+    description: 'Exempeltext för serviceflödet.',
+    examples: ['En dörr som inte går i lås', 'Lösa plattor'],
+    next: 'Exempel på vad som händer efter att förfrågan skickats.',
+    action: { label: 'Skicka serviceförfrågan', href: anchors.contact },
+  },
+]
+
+export const details: DetailItem[] = [
+  { title: 'Material och skick', description: 'Exempel på en faktor som påverkar omfattning och kostnad.' },
+  { title: 'Åtkomst', description: 'Exempel på en faktor som påverkar omfattning och kostnad.' },
+  { title: 'Samordning', description: 'Exempel på en faktor som påverkar omfattning och kostnad.' },
+  { title: 'Tillstånd', description: 'Exempel på en faktor som påverkar omfattning och kostnad.' },
+]
+
+export const splitColumns: TextBlock[] = [
+  { title: 'För styrelsen', paragraphs: ['Exempeltext om vad som gäller för styrelsen.'] },
+  { title: 'För de boende', paragraphs: ['Exempeltext om hur de boende påverkas.'], list: ['Exempelpunkt', 'Exempelpunkt två'] },
+]
+
+export const boardControlItems: BoardControlItem[] = [
+  { title: 'Omfattning', question: 'Vad ingår?', description: 'Exempel på en bekräftad rutin.', deliverable: 'Exempel på vad styrelsen får.', verified: true },
+  { title: 'Ekonomisk uppföljning', question: 'Hur följs ekonomin upp?', description: 'Exempel på en obekräftad rutin. Leveransen visas inte.', deliverable: 'Visas inte eftersom rutinen inte är bekräftad.', verified: false },
+]
+
+/** Påhittat referensprojekt. Får aldrig användas på riktiga sidor. */
+export const caseStudy: CaseStudy = {
+  slug: 'exempelprojekt',
+  title: 'Påhittat exempelprojekt',
+  location: 'Exempelort',
+  clientPublishable: false,
+  propertyType: 'Flerbostadshus (exempel)',
+  assignment: 'Fasadrenovering (exempel)',
+  services: [],
+  performedBy: 'Exempelbolaget AB',
+  role: 'Exempelroll',
+  startingPoint: 'Påhittat utgångsläge som visar hur texten placeras.',
+  scope: ['Exempel på omfattning'],
+  execution: 'Påhittat genomförande.',
+  result: 'Påhittat resultat.',
+  images: [images.facade],
 }
 
 export const cta = {

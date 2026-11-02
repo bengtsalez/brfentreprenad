@@ -16,6 +16,11 @@ defineProps<{
 
 const route = useRoute()
 const isOpen = ref(false)
+// Delas med mobilens kontaktlist, som döljs när menyn är öppen.
+const menuOpenState = useState('mobile-menu-open', () => false)
+watch(isOpen, (open) => {
+  menuOpenState.value = open
+})
 const openSubmenu = ref<string>()
 const menuId = useId()
 const toggleButton = useTemplateRef<HTMLButtonElement>('toggleButton')

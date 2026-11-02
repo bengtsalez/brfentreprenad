@@ -1,15 +1,8 @@
 <script setup lang="ts">
-import { sitePages } from '#shared/site-structure'
-import { companyDetails } from '~/content/company'
-import type { ContactDetail } from '~/types/content'
+import { companyDetails, phone } from '~/content/company'
 
-/** Gemensam ram för publika sidor: hoppa-länk, sidhuvud, innehåll och sidfot. */
-const { mainNav, footerNav, footerCompanyNav, actions } = useSiteNavigation()
-
-const contactDetails: ContactDetail[] = [
-  ...companyDetails,
-  { label: 'Förfrågningar', value: 'Skicka en förfrågan', href: sitePages.contact.path },
-]
+/** Gemensam ram för publika sidor: hoppa-länk, sidhuvud, innehåll, sidfot och mobilens kontaktlist. */
+const { mainNav, footerNav, footerCompanyNav, inquiryLink } = useSiteNavigation()
 </script>
 
 <template>
@@ -21,19 +14,23 @@ const contactDetails: ContactDetail[] = [
       Hoppa till innehållet
     </a>
 
-    <SiteHeader :nav-items="mainNav" :contact-link="actions.service" logo-href="/" />
+    <SiteHeader :nav-items="mainNav" :contact-link="inquiryLink" logo-href="/" />
 
     <main id="innehall" tabindex="-1" class="flex-1 focus:outline-none">
       <slot />
     </main>
 
     <SiteFooter
-      description="Byggservice och entreprenad för bostadsrättsföreningar, fastighetsägare och förvaltare från Halmstad till Falsterbo."
+      description="Renovering och fastighetsservice för bostadsrättsföreningar och fastighetsförvaltare från Halmstad till Falsterbo."
       :service-items="footerNav"
       :nav-items="footerCompanyNav"
-      :contact-details="contactDetails"
+      :contact-details="[...companyDetails, { label: 'Förfrågningar', value: 'Skicka en förfrågan', href: inquiryLink.href }]"
       legal="© BRF Entreprenad"
       logo-href="/"
     />
+
+    <!-- Plats för kontaktlisten, så att den inte täcker sidfotens sista rad. -->
+    <div class="theme-dark h-[calc(4.5rem+env(safe-area-inset-bottom))] bg-canvas md:hidden" aria-hidden="true" />
+    <SiteMobileActionBar :inquiry-link="inquiryLink" :phone="phone" />
   </div>
 </template>

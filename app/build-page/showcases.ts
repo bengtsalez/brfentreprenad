@@ -103,10 +103,50 @@ export const sectionShowcases = {
     title: 'FAQ',
     description: 'FaqSection med expanderbara svar. Fungerar med tangentbord och har aria-expanded och aria-controls.',
   },
+  trust: {
+    id: 'fortroende',
+    title: 'Förtroenderad',
+    description: 'TrustSection med verifierbara uppgifter direkt under heron. Använd bara bekräftade uppgifter.',
+  },
+  inquiryChoice: {
+    id: 'tva-ingangar',
+    title: 'Två ingångar',
+    description: 'InquiryChoiceSection skiljer service från planerade renoveringar och förklarar vad som händer efter klick.',
+  },
+  detailList: {
+    id: 'detaljlista',
+    title: 'Detaljlista',
+    description: 'DetailListSection för vanliga problem, omfattning och kostnadsfaktorer. Två layouter: grid och rows.',
+  },
+  splitText: {
+    id: 'tva-spalter',
+    title: 'Två textspalter',
+    description: 'SplitTextSection, t.ex. hur styrelse respektive boende påverkas.',
+  },
+  boardControl: {
+    id: 'styrelsens-kontroll',
+    title: 'Styrelsens kontroll',
+    description: 'BoardControlSection. Leveransen visas bara för rutiner som är bekräftade (verified).',
+  },
+  caseStudy: {
+    id: 'referens-rad',
+    title: 'Referens som rad',
+    description: 'CaseStudySection visar referenser med stor bild och anger alltid vem som utförde arbetet. Exemplet är påhittat.',
+  },
   contact: {
     id: 'kontaktsektion',
-    title: 'Kontakt',
-    description: 'ContactSection med kontaktuppgifter och formulär. Formuläret validerar i webbläsaren men skickar ingenting.',
+    title: 'Kontakt och förfrågan',
+    description: 'ContactSection med direktkontakt och förfrågningsformulär. Utan låst flöde väljer besökaren service eller projekt. På byggsidan skickas ingenting.',
+  },
+  contactFlow: {
+    id: 'kontakt-projekt',
+    title: 'Förfrågan med låst flöde',
+    description: 'Samma sektion på en tjänstesida: flödet är låst och tjänsten förvald. Stegen efter inskick visas i sidospalten.',
+  },
+  mobileBar: {
+    id: 'mobil-kontaktlist',
+    title: 'Mobil kontaktlist',
+    description: 'SiteMobileActionBar visas längst ned på små skärmar efter en bit scroll. Den döljs när ett formulärfält har fokus, när förfrågningssektionen syns och när menyn är öppen.',
   },
   cta: {
     id: 'cta',

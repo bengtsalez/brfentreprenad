@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import type { StaffMember } from '~/types/content'
-import type { HeadingLevel } from '~/types/ui'
+import type { HeadingLevel, SectionBackground } from '~/types/ui'
 
+/** Personerna bakom verksamheten med bild, roll och direkt kontaktväg. */
 const props = withDefaults(defineProps<{
   title: string
   members: StaffMember[]
   eyebrow?: string
   lead?: string
+  background?: SectionBackground
   headingLevel?: HeadingLevel
 }>(), {
   eyebrow: undefined,
   lead: undefined,
+  background: 'default',
   headingLevel: 2,
 })
 
@@ -28,7 +31,7 @@ function initials(name: string) {
 </script>
 
 <template>
-  <UiSection>
+  <UiSection :background="background">
     <UiSectionHeading :title="title" :eyebrow="eyebrow" :lead="lead" :level="headingLevel" />
     <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <li v-for="member in members" :key="member.name" class="reveal">
@@ -36,10 +39,13 @@ function initials(name: string) {
           <div v-if="member.image" class="overflow-hidden">
             <img
               :src="member.image.src"
+              :srcset="member.image.srcSmall ? `${member.image.srcSmall} 400w, ${member.image.src} ${member.image.width}w` : undefined"
+              sizes="(min-width: 64rem) 17rem, (min-width: 40rem) 45vw, 90vw"
               :alt="member.image.alt"
               :width="member.image.width"
               :height="member.image.height"
               loading="lazy"
+              decoding="async"
               class="aspect-square w-full object-cover motion-safe:transition-[scale] motion-safe:duration-500 motion-safe:ease-premium motion-safe:group-hover:scale-[1.03]"
             >
           </div>
@@ -53,13 +59,16 @@ function initials(name: string) {
             <p class="text-ink-muted">
               {{ member.title }}
             </p>
-            <dl v-if="member.phone || member.email" class="mt-4 space-y-1">
+            <p v-if="member.responsibility" class="mt-2 text-sm">
+              {{ member.responsibility }}
+            </p>
+            <dl v-if="member.phone || member.email" class="mt-3">
               <div v-if="member.phone">
                 <dt class="sr-only">
                   Telefon
                 </dt>
                 <dd>
-                  <a :href="phoneHref(member.phone)" class="text-link font-semibold">{{ member.phone }}</a>
+                  <a :href="phoneHref(member.phone)" class="text-link inline-flex min-h-11 items-center font-semibold">{{ member.phone }}</a>
                 </dd>
               </div>
               <div v-if="member.email">
@@ -67,7 +76,7 @@ function initials(name: string) {
                   E-post
                 </dt>
                 <dd>
-                  <a :href="`mailto:${member.email}`" class="text-link font-semibold break-all">{{ member.email }}</a>
+                  <a :href="`mailto:${member.email}`" class="text-link inline-flex min-h-11 items-center font-semibold break-all">{{ member.email }}</a>
                 </dd>
               </div>
             </dl>

@@ -5,3 +5,20 @@
 
 [build.environment]
   NODE_VERSION = "24"
+
+# Tjänsteområdet byggservice heter numera fastighetsservice.
+[[redirects]]
+  from = "/tjanster/byggservice/*"
+  to = "/tjanster/fastighetsservice/"
+  status = 301
+
+# Byggsidan och formulärdefinitionerna är interna och ska inte indexeras.
+[[headers]]
+  for = "/build/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/__forms.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

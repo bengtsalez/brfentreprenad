@@ -1,4 +1,5 @@
-import { findPage, isPublished, serviceAreas, sitePages, type SitePage } from '#shared/site-structure'
+import { findPage, isPublished, priorityServices, serviceAreas, sitePages, type SitePage } from '#shared/site-structure'
+import { inquiryHref } from '~/content/inquiry'
 import type { ActionKind, EntryItem, LinkItem, NavItem } from '~/types/content'
 
 function linkTo(page: SitePage, label = page.title): LinkItem {
@@ -24,27 +25,36 @@ export function useSiteNavigation() {
     .filter(page => page.status === 'published')
     .map(page => linkTo(page))
 
+  const priorityLinks = publishedLinks(priorityServices.map(service => service.path))
+
   const mainNav: NavItem[] = [
-    linkTo(sitePages.services, 'Tjänster'),
+    { label: 'Tjänster', children: [...priorityLinks, linkTo(sitePages.services, 'Alla tjänster')] },
     { label: 'För er', children: audienceLinks },
     linkTo(sitePages.process),
-    linkTo(sitePages.references),
+    linkTo(sitePages.references, 'Referenser'),
     linkTo(sitePages.about, 'Om oss'),
     linkTo(sitePages.contact),
   ].filter(item => ('children' in item ? item.children?.length : isPublished(item.href!)))
 
   if (accountUrl) mainNav.push({ label: 'Mina ärenden', href: accountUrl })
 
+  // Utan bokningstjänst leder service till kontaktformuläret med serviceflödet förvalt.
   const actions: Record<ActionKind, LinkItem> = {
     service: bookingUrl
       ? { label: 'Boka service', href: bookingUrl }
-      : { label: 'Beställ ett servicearbete', href: sitePages.contact.path },
-    project: { label: 'Diskutera ett projekt', href: sitePages.contact.path },
+      : { label: 'Skicka serviceförfrågan', href: inquiryHref('service') },
+    project: { label: 'Prata med en projektledare', href: inquiryHref('projekt') },
   }
 
+  /** Knappen i sidhuvudet och mobilens kontaktlist. */
+  const inquiryLink: LinkItem = { label: 'Skicka förfrågan', href: `${sitePages.contact.path}#forfragan` }
+
   const footerNav: LinkItem[] = [
-    linkTo(sitePages.services, 'Tjänster'),
-    ...serviceAreas.filter(area => area.status === 'published').map(area => linkTo(area)),
+    ...priorityLinks,
+    ...serviceAreas
+      .filter(area => area.status === 'published' && !priorityLinks.some(link => link.href === area.path))
+      .map(area => linkTo(area)),
+    linkTo(sitePages.services, 'Alla tjänster'),
   ]
 
   const footerCompanyNav: LinkItem[] = publishedLinks([
@@ -60,6 +70,8 @@ export function useSiteNavigation() {
     footerNav,
     footerCompanyNav,
     actions,
+    inquiryLink,
+    priorityLinks,
     hasBooking: Boolean(bookingUrl),
   }
 }

@@ -215,7 +215,7 @@ const demoForm = reactive({
             <UiSelect
               v-model="demoForm.choice"
               label="Vad gäller ärendet?"
-              :options="content.contact.subjectOptions"
+              :options="content.selectOptions"
             />
             <UiTextarea v-model="demoForm.message" label="Meddelande" class="sm:col-span-2" />
             <UiCheckbox v-model="demoForm.checked" label="Jag godkänner att BRF Entreprenad kontaktar mig." class="sm:col-span-2" />
@@ -384,13 +384,57 @@ const demoForm = reactive({
           />
         </BuildShowcase>
 
+        <BuildShowcase v-bind="sections.trust" bleed>
+          <TrustSection :items="content.trust" />
+        </BuildShowcase>
+
+        <BuildShowcase v-bind="sections.inquiryChoice" bleed>
+          <InquiryChoiceSection title="Två vägar in" :choices="content.inquiryChoices" :heading-level="3" />
+        </BuildShowcase>
+
+        <BuildShowcase v-bind="sections.detailList" bleed>
+          <DetailListSection title="Layout grid" :items="content.details" background="subtle" :heading-level="3" />
+          <DetailListSection title="Layout rows" :items="content.details" layout="rows" :heading-level="3" />
+          <DetailListSection title="Mörk bakgrund" :items="content.details" background="dark" :heading-level="3" />
+        </BuildShowcase>
+
+        <BuildShowcase v-bind="sections.splitText" bleed>
+          <SplitTextSection title="Hur boende och styrelse påverkas" :columns="content.splitColumns" :heading-level="3" />
+        </BuildShowcase>
+
+        <BuildShowcase v-bind="sections.boardControl" bleed>
+          <BoardControlSection title="Så behåller styrelsen kontroll över projektet" :items="content.boardControlItems" :heading-level="3" />
+        </BuildShowcase>
+
+        <BuildShowcase v-bind="sections.caseStudy" bleed>
+          <CaseStudySection title="Referensprojekt" :projects="[content.caseStudy]" :heading-level="3" />
+        </BuildShowcase>
+
         <BuildShowcase v-bind="sections.contact" bleed>
           <ContactSection
             id="kontakt"
             v-bind="content.contact"
             :contact-details="content.contactDetails"
+            demo
             :heading-level="3"
           />
+        </BuildShowcase>
+
+        <BuildShowcase v-bind="sections.contactFlow" bleed>
+          <ContactSection
+            title="Berätta om ert projekt"
+            :contact-details="content.contactDetails"
+            flow="projekt"
+            service="fasadrenovering"
+            demo
+            :heading-level="3"
+          />
+        </BuildShowcase>
+
+        <BuildShowcase v-bind="sections.mobileBar">
+          <p class="max-w-prose text-ink-muted">
+            Kontaktlisten är fast positionerad och visas därför inte i ramen här. Öppna en publik sida i mobilbredd och scrolla förbi heron för att se den.
+          </p>
         </BuildShowcase>
 
         <BuildShowcase v-bind="sections.cta" bleed>

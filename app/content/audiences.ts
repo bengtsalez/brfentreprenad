@@ -4,7 +4,7 @@ import type { AudiencePageContent } from '~/types/content'
 
 export const audiencePages: Record<string, AudiencePageContent> = {
   [sitePages.housingAssociations.path]: {
-    metaTitle: 'Byggservice och renovering för bostadsrättsföreningar',
+    metaTitle: 'Fastighetsservice och renovering för bostadsrättsföreningar',
     metaDescription: 'Stöd för styrelsen i bostadsrättsföreningar: servicebeställningar, renoveringar och större projekt med helhetsansvar från Halmstad till Falsterbo.',
     eyebrow: 'För bostadsrättsföreningar',
     title: 'En entreprenör för föreningens fastighet',
@@ -15,8 +15,8 @@ export const audiencePages: Record<string, AudiencePageContent> = {
         'Uppdragen i en förening varierar. Ibland gäller det en dörr som behöver justeras, ibland en fasad eller ett trapphus som ska renoveras. Oavsett storlek ska styrelsen veta vad som är beställt, vem som ansvarar och var arbetet står.',
       ],
       list: [
-        'Servicearbeten som beställs med adress, behov och önskad starttid',
-        'Status för varje beställning i ert konto',
+        'Servicearbeten som beskrivs i en förfrågan, utan krav på konto',
+        'En kontaktperson som håller ihop arbetet',
         'Personlig projektledare vid större projekt',
         'Underlag som styrelsen kan fatta beslut på',
       ],
@@ -24,7 +24,7 @@ export const audiencePages: Record<string, AudiencePageContent> = {
     servicesTitle: 'Tjänster som föreningar ofta behöver',
     servicesLead: 'Ett urval av områdena. Alla tjänster finns i tjänsteöversikten.',
     services: [
-      '/tjanster/byggservice/',
+      '/tjanster/fastighetsservice/',
       '/tjanster/portar-las-och-passage/',
       '/tjanster/fasad-balkong-och-tak/',
       '/tjanster/invandig-renovering/',
@@ -41,7 +41,7 @@ export const audiencePages: Record<string, AudiencePageContent> = {
     faq: [
       {
         question: 'Kan styrelsen beställa mindre arbeten utan ett större projekt?',
-        answer: 'Ja. Reparationer och mindre arbeten beställs som service, med adress, behov och önskad starttid.',
+        answer: 'Ja. Reparationer och mindre arbeten skickas som en serviceförfrågan med adress, behov och önskad starttid.',
       },
       {
         question: 'Var arbetar ni?',
@@ -56,28 +56,28 @@ export const audiencePages: Record<string, AudiencePageContent> = {
   },
 
   [sitePages.propertyManagers.path]: {
-    metaTitle: 'Byggservice för fastighetsförvaltare',
-    metaDescription: 'Servicebeställningar, samordning och statusuppföljning för fastighetsförvaltare med uppdrag från Halmstad till Falsterbo.',
+    metaTitle: 'Fastighetsservice för fastighetsförvaltare',
+    metaDescription: 'Reparationer, mindre arbeten och större åtgärder för fastighetsförvaltare med uppdrag från Halmstad till Falsterbo.',
     eyebrow: 'För fastighetsförvaltare',
-    title: 'Servicearbeten som går att följa',
-    lead: 'Som förvaltare behöver ni kunna lägga en beställning och se var arbetet står. Vi utför reparationer, mindre arbeten och större åtgärder i de fastigheter ni förvaltar.',
+    title: 'Servicearbeten med en tydlig kontakt',
+    lead: 'Som förvaltare behöver ni kunna lämna över ett ärende och få besked om vad som händer. Vi utför reparationer, mindre arbeten och större åtgärder i de fastigheter ni förvaltar.',
     needs: {
       title: 'Beställning, samordning och återkoppling',
       paragraphs: [
         'Förvaltarens vardag består av många ärenden på olika adresser. Varje beställning hanteras som ett eget ärende med adress, beskrivning och önskad starttid.',
-        'I kontot ser ni status för era ärenden, till exempel att material inväntas eller vilken vecka arbetet är inplanerat. Det gör det enklare att ge besked vidare till fastighetsägare och boende.',
+        'Vi återkommer när något behöver klargöras och när arbetet är planerat, så att ni kan ge besked vidare till fastighetsägare och boende.',
       ],
       list: [
-        'Beställning med adress, behov och önskad starttid',
-        'Status per ärende, till exempel "Inväntar material"',
-        'Planerad vecka när arbetet är inplanerat',
+        'Förfrågan med adress, behov och önskad starttid',
+        'Besked om tillträde, material och planering',
+        'Flera mindre arbeten på samma adress kan samlas',
         'Större åtgärder med personlig projektledare',
       ],
     },
     servicesTitle: 'Vanliga beställningar från förvaltare',
     servicesLead: 'Ett urval av områdena. Alla tjänster finns i tjänsteöversikten.',
     services: [
-      '/tjanster/byggservice/',
+      '/tjanster/fastighetsservice/',
       '/tjanster/portar-las-och-passage/',
       '/tjanster/fonster-och-dorrar/',
       '/tjanster/invandig-renovering/',
@@ -92,12 +92,12 @@ export const audiencePages: Record<string, AudiencePageContent> = {
     },
     faq: [
       {
-        question: 'Kan vi följa status på våra beställningar?',
-        answer: 'Ja. Varje beställning syns i ert konto med aktuell status, till exempel att material inväntas eller vilken vecka arbetet är inplanerat.',
+        question: 'Kan vi skicka flera ärenden samtidigt?',
+        answer: 'Ja. Beskriv gärna alla arbeten på samma adress i en förfrågan, så kan de bedömas och planeras tillsammans.',
       },
       {
         question: 'Är önskad starttid bekräftad när vi har beställt?',
-        answer: 'Nej. Den önskade starttiden är ert önskemål. När arbetet är inplanerat ser ni planerad vecka i ärendets status.',
+        answer: 'Nej. Den önskade starttiden är ert önskemål. Planerad tid bekräftas först när arbetet är inplanerat.',
       },
       {
         question: 'Tar ni större uppdrag i fastigheter vi förvaltar?',
@@ -122,7 +122,7 @@ export const audiencePages: Record<string, AudiencePageContent> = {
       list: [
         'En part med helhetsansvar',
         'Personlig projektledare vid större projekt',
-        'Status för servicebeställningar i ert konto',
+        'Förfrågan utan krav på konto eller avtal',
         'Uppdrag från Halmstad till Falsterbo',
       ],
     },
@@ -134,7 +134,7 @@ export const audiencePages: Record<string, AudiencePageContent> = {
       '/tjanster/mark-grund-och-utemiljo/',
       '/tjanster/fonster-och-dorrar/',
       '/tjanster/invandig-renovering/',
-      '/tjanster/byggservice/',
+      '/tjanster/fastighetsservice/',
     ],
     collaboration: {
       title: 'Underlag för beslut',
@@ -154,7 +154,7 @@ export const audiencePages: Record<string, AudiencePageContent> = {
       },
       {
         question: 'Hur beställer vi mindre arbeten?',
-        answer: 'Mindre arbeten beställs som service med adress, behov och önskad starttid. Status för beställningen följer ni i ert konto.',
+        answer: 'Skicka en serviceförfrågan med adress, vad som behöver göras och önskad starttid. Vi återkommer om något behöver klargöras innan arbetet planeras.',
       },
     ],
     primaryAction: 'project',

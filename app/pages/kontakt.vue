@@ -1,23 +1,21 @@
 <script setup lang="ts">
-import { serviceAreas, sitePages } from '#shared/site-structure'
+import { sitePages } from '#shared/site-structure'
 import { companyDetails } from '~/content/company'
+import { inquiryFlows } from '~/content/inquiry'
 import { staff } from '~/content/staff'
-import type { SelectOption } from '~/types/content'
 
+/*
+ * Kontaktsidan. Flöde och tjänst kan förväljas med ?typ=service|projekt och
+ * ?tjanst=<värde> (se app/content/inquiry.ts). Valet skrivs tillbaka i URL:en
+ * så att det finns kvar vid omladdning.
+ */
 usePageSeo({
   title: 'Kontakt',
-  description: 'Skicka en förfrågan om servicearbete, renovering eller större projekt till BRF Entreprenad. Vi arbetar från Halmstad till Falsterbo.',
+  description: 'Skicka en serviceförfrågan eller berätta om ett planerat projekt. BRF Entreprenad arbetar med bostadsrättsföreningar och förvaltare från Halmstad till Falsterbo.',
   path: sitePages.contact.path,
 })
 
 const { hasBooking, actions } = useSiteNavigation()
-
-const subjectOptions: SelectOption[] = [
-  ...serviceAreas
-    .filter(area => area.status === 'published')
-    .map(area => ({ value: area.slug, label: area.title })),
-  { value: 'annat', label: 'Annat' },
-]
 </script>
 
 <template>
@@ -25,19 +23,31 @@ const subjectOptions: SelectOption[] = [
     <HeroCompactSection
       eyebrow="Kontakt"
       title="Kontakta BRF Entreprenad"
-      lead="Skicka en förfrågan om ett servicearbete, en renovering eller ett större projekt."
-    />
+      lead="Skicka en förfrågan om ett servicearbete eller ett planerat projekt, eller ring oss direkt. Ni behöver inget konto."
+    >
+      <template #aside>
+        <dl class="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+          <div v-for="(flow, key) in inquiryFlows" :key="key" class="space-y-2 border-t border-line pt-5">
+            <dt class="font-semibold">
+              {{ flow.label }}
+            </dt>
+            <dd class="text-sm text-ink-muted">
+              {{ flow.summary }}
+            </dd>
+          </div>
+        </dl>
+      </template>
+    </HeroCompactSection>
 
     <ContactSection
       title="Berätta vad ni behöver hjälp med"
-      lead="Beskriv arbetet, var det ska utföras och när ni önskar att det startar. Vi återkommer för att gå igenom förutsättningarna."
+      lead="Välj om det gäller ett servicearbete eller ett planerat projekt. Vet ni inte vilken tjänst det gäller går det bra att välja Vet inte ännu."
       :contact-details="companyDetails"
-      :subject-options="subjectOptions"
-      form-name="kontakt"
+      sync-url
     >
       <div class="space-y-3 border-t border-line pt-6 text-sm text-ink-muted">
         <p v-if="hasBooking">
-          Gäller det ett konkret servicearbete kan ni <a :href="actions.service.href" class="text-link">boka service</a> direkt och följa status i ert konto.
+          Gäller det ett konkret servicearbete kan ni också <a :href="actions.service.href" class="text-link">boka service</a> direkt.
         </p>
         <p>
           Uppgifterna i formuläret används för att besvara er förfrågan.
@@ -47,8 +57,8 @@ const subjectOptions: SelectOption[] = [
 
     <StaffSection
       v-if="staff.length"
-      title="Våra medarbetare"
-      lead="Ni når oss också direkt."
+      title="Kontakta oss direkt"
+      lead="Ni kan också ringa eller mejla någon av oss."
       :members="staff"
     />
   </div>

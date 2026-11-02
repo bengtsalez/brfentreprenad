@@ -1,0 +1,44 @@
+<!doctype html>
+<!--
+  Formulärdefinitioner för Netlify Forms. Netlify läser den här filen vid
+  driftsättning och registrerar formulären. Fältnamnen måste stämma med
+  app/components/sections/ContactForm.vue, annars sparas fälten inte.
+  Formulären skickas med JavaScript till den här adressen.
+-->
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <title>Formulär</title>
+</head>
+<body>
+  <form name="serviceforfragan" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="serviceforfragan">
+    <input name="bot-field">
+    <input type="text" name="flode">
+    <input type="text" name="tjanst">
+    <input type="text" name="namn">
+    <input type="text" name="epost">
+    <input type="text" name="telefon">
+    <input type="text" name="organisation">
+    <input type="text" name="ort">
+    <textarea name="meddelande"></textarea>
+    <input type="text" name="kallsida">
+    <input type="text" name="foregaende-sida">
+  </form>
+  <form name="projektforfragan" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="projektforfragan">
+    <input name="bot-field">
+    <input type="text" name="flode">
+    <input type="text" name="tjanst">
+    <input type="text" name="namn">
+    <input type="text" name="epost">
+    <input type="text" name="telefon">
+    <input type="text" name="organisation">
+    <input type="text" name="ort">
+    <textarea name="meddelande"></textarea>
+    <input type="text" name="kallsida">
+    <input type="text" name="foregaende-sida">
+  </form>
+</body>
+</html>

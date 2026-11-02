@@ -30,7 +30,7 @@ export interface SitePage {
 }
 
 export interface ServiceArea extends SitePage {
-  /** Del av URL:en, t.ex. "byggservice" för /tjanster/byggservice/. */
+  /** Del av URL:en, t.ex. "fastighetsservice" för /tjanster/fastighetsservice/. */
   slug: string
   children: SitePage[]
 }
@@ -78,11 +78,13 @@ export const sitePages = {
     status: 'published',
     stage: 1,
   },
+  // Beskriver konto och statusuppföljning i bokningstjänsten. Publiceras först
+  // när tjänsten finns på riktigt (NUXT_PUBLIC_BOOKING_URL).
   bookingGuide: {
     path: '/sa-fungerar-servicebokningen/',
     title: 'Så fungerar servicebokningen',
     summary: 'Bokning, planering och status.',
-    status: 'published',
+    status: 'planned',
     stage: 1,
   },
   references: {
@@ -136,20 +138,21 @@ export const sitePages = {
 
 export const serviceAreas: ServiceArea[] = [
   {
-    slug: 'byggservice',
-    path: '/tjanster/byggservice/',
-    title: 'Byggservice och reparationer',
-    summary: 'Beställda reparationer och mindre arbeten i fastighetens alla delar.',
+    // Hette tidigare byggservice. netlify.toml omdirigerar de gamla adresserna.
+    slug: 'fastighetsservice',
+    path: '/tjanster/fastighetsservice/',
+    title: 'Fastighetsservice',
+    summary: 'Reparationer och mindre arbeten i trapphus, entréer, på fasader, tak och gårdar.',
     status: 'published',
     stage: 1,
     children: [
-      { path: '/tjanster/byggservice/snickeri/', title: 'Snickeri', summary: 'Mindre snickerier, lister, foder, panel, förråd och inredning.', status: 'planned', stage: 3 },
-      { path: '/tjanster/byggservice/dorrar-och-fonster/', title: 'Dörrar och fönster', summary: 'Justering, tätning, beslag, mindre byten och reparationer.', status: 'planned', stage: 3 },
-      { path: '/tjanster/byggservice/maleri-och-ytskikt/', title: 'Måleri och ytskikt', summary: 'Bättringsmålning, spackling, väggar, tak och mindre golvarbeten.', status: 'planned', stage: 3 },
-      { path: '/tjanster/byggservice/fasadservice/', title: 'Fasadservice', summary: 'Mindre puts-, fog- och panelreparationer.', status: 'planned', stage: 3 },
-      { path: '/tjanster/byggservice/takservice/', title: 'Takservice', summary: 'Mindre takreparationer, hängrännor, stuprör och plåtdetaljer.', status: 'planned', stage: 3 },
-      { path: '/tjanster/byggservice/markreparationer/', title: 'Markreparationer', summary: 'Plattor, gångar, trappor, räcken, grindar och staket.', status: 'planned', stage: 3 },
-      { path: '/tjanster/byggservice/skadeaterstallning/', title: 'Skadeåterställning', summary: 'Återställning efter läckor, skadegörelse och inbrott.', status: 'planned', stage: 3 },
+      { path: '/tjanster/fastighetsservice/snickeri/', title: 'Snickeri', summary: 'Mindre snickerier, lister, foder, panel, förråd och inredning.', status: 'planned', stage: 3 },
+      { path: '/tjanster/fastighetsservice/dorrar-och-fonster/', title: 'Dörrar och fönster', summary: 'Justering, tätning, beslag, mindre byten och reparationer.', status: 'planned', stage: 3 },
+      { path: '/tjanster/fastighetsservice/maleri-och-ytskikt/', title: 'Måleri och ytskikt', summary: 'Bättringsmålning, spackling, väggar, tak och mindre golvarbeten.', status: 'planned', stage: 3 },
+      { path: '/tjanster/fastighetsservice/fasadservice/', title: 'Fasadservice', summary: 'Mindre puts-, fog- och panelreparationer.', status: 'planned', stage: 3 },
+      { path: '/tjanster/fastighetsservice/takservice/', title: 'Takservice', summary: 'Mindre takreparationer, hängrännor, stuprör och plåtdetaljer.', status: 'planned', stage: 3 },
+      { path: '/tjanster/fastighetsservice/markreparationer/', title: 'Markreparationer', summary: 'Plattor, gångar, trappor, räcken, grindar och staket.', status: 'planned', stage: 3 },
+      { path: '/tjanster/fastighetsservice/skadeaterstallning/', title: 'Skadeåterställning', summary: 'Återställning efter läckor, skadegörelse och inbrott.', status: 'planned', stage: 3 },
     ],
   },
   {
@@ -160,8 +163,7 @@ export const serviceAreas: ServiceArea[] = [
     status: 'published',
     stage: 1,
     children: [
-      { path: '/tjanster/portar-las-och-passage/porttelefoni/', title: 'Porttelefoni', summary: 'Installation, byte och service av porttelefoner.', status: 'planned', stage: 2 },
-      { path: '/tjanster/portar-las-och-passage/passagesystem/', title: 'Passagesystem', summary: 'Taggar, kodlås, digital passage och behörigheter.', status: 'planned', stage: 2 },
+      { path: '/tjanster/portar-las-och-passage/porttelefoni-och-passersystem/', title: 'Porttelefoni och passersystem', summary: 'Byte, utbyggnad och service av porttelefoni, taggläsare och behörigheter.', status: 'published', stage: 1 },
       { path: '/tjanster/portar-las-och-passage/las-och-dorrstangare/', title: 'Lås och dörrstängare', summary: 'Lås, beslag, dörrstängare och funktion.', status: 'planned', stage: 3 },
       { path: '/tjanster/portar-las-och-passage/entrepartier-och-portar/', title: 'Entrépartier och portar', summary: 'Entrépartier, portar, dörrautomatik och tillgänglighet.', status: 'planned', stage: 3 },
     ],
@@ -174,13 +176,13 @@ export const serviceAreas: ServiceArea[] = [
     status: 'published',
     stage: 1,
     children: [
-      { path: '/tjanster/fasad-balkong-och-tak/fasadrenovering/', title: 'Fasadrenovering', summary: 'Övergripande fasadprojekt i puts, tegel och trä.', status: 'planned', stage: 2 },
+      { path: '/tjanster/fasad-balkong-och-tak/fasadrenovering/', title: 'Fasadrenovering', summary: 'Renovering av puts-, tegel- och träfasader som ett samlat projekt.', status: 'published', stage: 1 },
       { path: '/tjanster/fasad-balkong-och-tak/putsfasad/', title: 'Putsfasad', summary: 'Omputsning, putslagning och renovering.', status: 'planned', stage: 3 },
       { path: '/tjanster/fasad-balkong-och-tak/tegelfasad-och-omfogning/', title: 'Tegelfasad och omfogning', summary: 'Fogar, tegelbyte och reparationer.', status: 'planned', stage: 3 },
       { path: '/tjanster/fasad-balkong-och-tak/trafasad-och-panelbyte/', title: 'Träfasad och panelbyte', summary: 'Panelbyte, foder, knutar och bakomliggande konstruktion.', status: 'planned', stage: 3 },
       { path: '/tjanster/fasad-balkong-och-tak/fasadmalning/', title: 'Fasadmålning', summary: 'Målning av fasader och tillhörande detaljer.', status: 'planned', stage: 3 },
       { path: '/tjanster/fasad-balkong-och-tak/tillaggsisolering/', title: 'Tilläggsisolering', summary: 'Isolering i samband med fasadåtgärder.', status: 'planned', stage: 3 },
-      { path: '/tjanster/fasad-balkong-och-tak/balkongrenovering/', title: 'Balkongrenovering', summary: 'Betong, tätskikt, räcken och balkongåtgärder.', status: 'planned', stage: 2 },
+      { path: '/tjanster/fasad-balkong-och-tak/balkongrenovering/', title: 'Balkongrenovering', summary: 'Balkongplattor, tätskikt, räcken och infästningar.', status: 'published', stage: 1 },
       { path: '/tjanster/fasad-balkong-och-tak/takrenovering/', title: 'Takrenovering', summary: 'Takbyte, tätskikt och renovering.', status: 'planned', stage: 2 },
       { path: '/tjanster/fasad-balkong-och-tak/platarbeten-och-taksakerhet/', title: 'Plåtarbeten och taksäkerhet', summary: 'Plåtdetaljer, avvattning och taksäkerhet.', status: 'planned', stage: 3 },
     ],
@@ -206,7 +208,7 @@ export const serviceAreas: ServiceArea[] = [
     status: 'published',
     stage: 1,
     children: [
-      { path: '/tjanster/mark-grund-och-utemiljo/dranering/', title: 'Dränering', summary: 'Dränering och grundisolering.', status: 'planned', stage: 2 },
+      { path: '/tjanster/mark-grund-och-utemiljo/dranering/', title: 'Dränering', summary: 'Ny dränering och grundisolering runt flerbostadshus.', status: 'published', stage: 1 },
       { path: '/tjanster/mark-grund-och-utemiljo/dagvatten/', title: 'Dagvatten', summary: 'Avledning, ledningar och brunnar.', status: 'planned', stage: 3 },
       { path: '/tjanster/mark-grund-och-utemiljo/fuktatgarder/', title: 'Fuktåtgärder', summary: 'Utredning och föreslagna åtgärder vid fuktproblem.', status: 'planned', stage: 3 },
       { path: '/tjanster/mark-grund-och-utemiljo/stensattning-och-asfalt/', title: 'Stensättning och asfalt', summary: 'Gångar, entréer, parkeringar och hårdgjorda ytor.', status: 'planned', stage: 3 },
@@ -339,3 +341,15 @@ export function findPage(path: string): SitePage | undefined {
 export function isPublished(path: string): boolean {
   return findPage(path)?.status === 'published'
 }
+
+/**
+ * Prioriterade tjänstesidor. Visas först i menyn, på startsidan och i
+ * tjänsteöversikten. `kind` skiljer servicearbeten från planerade projekt.
+ */
+export const priorityServices: { path: string, kind: 'service' | 'project' }[] = [
+  { path: '/tjanster/fasad-balkong-och-tak/fasadrenovering/', kind: 'project' },
+  { path: '/tjanster/fasad-balkong-och-tak/balkongrenovering/', kind: 'project' },
+  { path: '/tjanster/mark-grund-och-utemiljo/dranering/', kind: 'project' },
+  { path: '/tjanster/fastighetsservice/', kind: 'service' },
+  { path: '/tjanster/portar-las-och-passage/porttelefoni-och-passersystem/', kind: 'service' },
+]

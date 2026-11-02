@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { bookingStatuses, sitePages } from '#shared/site-structure'
+import { bookingStatuses, isPublished, sitePages } from '#shared/site-structure'
 import { bookingSteps, statusCaption, statusExamples } from '~/content/processes'
 import type { FaqItem } from '~/types/content'
+
+// Sidan beskriver bokningstjänstens konto och publiceras först när tjänsten finns.
+if (!isPublished(sitePages.bookingGuide.path)) {
+  throw createError({ statusCode: 404, statusMessage: 'Sidan finns inte', fatal: true })
+}
 
 usePageSeo({
   title: 'Så fungerar servicebokningen',

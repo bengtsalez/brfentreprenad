@@ -236,6 +236,8 @@
   letter-spacing: -0.025em;
   text-wrap: balance;
   overflow-wrap: break-word;
+  /* Långa svenska sammansättningar avstavas i stället för att flöda över. */
+  hyphens: auto;
 }
 
 @utility heading-lg {
@@ -246,6 +248,8 @@
   letter-spacing: -0.02em;
   text-wrap: balance;
   overflow-wrap: break-word;
+  /* Långa svenska sammansättningar avstavas i stället för att flöda över. */
+  hyphens: auto;
 }
 
 @utility heading-md {

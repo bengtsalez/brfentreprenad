@@ -5,6 +5,7 @@ import type { HeadingLevel, SectionBackground } from '~/types/ui'
 /**
  * Redaktionell lista med avdelande linjer, t.ex. tjänsteområden.
  * Varje rad har rubrik, beskrivning och valfria punkter. Rubriken blir en länk när `href` finns.
+ * Default-sloten visas efter listan, t.ex. för en länk vidare.
  */
 const props = withDefaults(defineProps<{
   title: string
@@ -53,5 +54,6 @@ const entryHeadingLevel = computed(() => childHeadingLevel(props.headingLevel))
         </ul>
       </li>
     </ul>
+    <slot />
   </UiSection>
 </template>

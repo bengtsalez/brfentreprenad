@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { sitePages } from '#shared/site-structure'
 import { office, officeAddress } from '~/content/company'
+import { staff } from '~/content/staff'
 import type { BenefitItem } from '~/types/content'
 
 usePageSeo({
@@ -11,7 +12,6 @@ usePageSeo({
 
 const { actions } = useSiteNavigation()
 
-// Kontaktpersoner och företagsuppgifter läggs till när de är bekräftade.
 const benefits: BenefitItem[] = [
   {
     title: 'Helhetsansvar',
@@ -22,8 +22,8 @@ const benefits: BenefitItem[] = [
     description: 'Vid större projekt har ni en projektledare som är er kontakt från start till färdigt arbete.',
   },
   {
-    title: 'Service som går att följa',
-    description: 'Servicebeställningar har en status i ert konto, så att ni ser var arbetet står.',
+    title: 'Service och projekt hålls isär',
+    description: 'Mindre arbeten skickas som en serviceförfrågan. Planerade renoveringar hanteras som projekt med underlag och projektledare.',
   },
   {
     title: 'Från Halmstad till Falsterbo',
@@ -41,7 +41,7 @@ const benefits: BenefitItem[] = [
     />
 
     <TextSection
-      title="Byggservice och entreprenad under ett ansvar"
+      title="Service och renovering under ett ansvar"
       :paragraphs="[
         'Vi arbetar brett inom bygg, från konkreta servicearbeten till större renoveringar. Samma part kan därför hantera både den enskilda reparationen och det större projektet.',
         'Som totalentreprenör tar vi helhetsansvar för uppdraget. Vid större projekt får ni en personlig projektledare som samordnar arbetet och håller er informerade.',
@@ -53,6 +53,14 @@ const benefits: BenefitItem[] = [
     </TextSection>
 
     <BenefitsSection title="Det här kan ni förvänta er" :benefits="benefits" />
+
+    <StaffSection
+      v-if="staff.length"
+      eyebrow="Personerna bakom"
+      title="Vilka vi är"
+      :members="staff"
+      background="subtle"
+    />
 
     <TextSection
       eyebrow="Kontor"
@@ -67,8 +75,8 @@ const benefits: BenefitItem[] = [
     <CtaSection
       title="Vill ni veta mer?"
       text="Berätta om er fastighet och vad ni behöver hjälp med."
-      :primary-action="{ label: 'Kontakta oss', href: sitePages.contact.path }"
-      :secondary-action="{ label: 'Så arbetar vi', href: sitePages.process.path }"
+      :primary-action="actions.project"
+      :secondary-action="actions.service"
     />
   </div>
 </template>

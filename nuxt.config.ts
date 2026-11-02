@@ -1,12 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from '@tailwindcss/vite'
-import { publishedPages } from './shared/site-structure'
+import { allPublicPages, publishedPages } from './shared/site-structure'
 
 // Projektet har inte @types/node, så process deklareras här.
 declare const process: { env: Record<string, string | undefined> }
 
-// Produktionsdomänen sätts i Netlify, den hittas inte på här.
-const siteUrl = process.env.NUXT_PUBLIC_SITE_URL ?? ''
+// Produktionsdomänen, bekräftad av beställaren. Kan ersättas med
+// NUXT_PUBLIC_SITE_URL, t.ex. för en testmiljö.
+const siteUrl = process.env.NUXT_PUBLIC_SITE_URL ?? 'https://www.brfentreprenad.se'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -36,6 +37,7 @@ export default defineNuxtConfig({
 
   // Tomma värden betyder att funktionen inte finns ännu. Sätts med
   // NUXT_PUBLIC_SITE_URL, NUXT_PUBLIC_BOOKING_URL och NUXT_PUBLIC_ACCOUNT_URL.
+  // Ingen analystjänst är aktiverad. Se app/composables/useTracking.ts.
   runtimeConfig: {
     public: {
       siteUrl,
@@ -47,9 +49,13 @@ export default defineNuxtConfig({
   },
 
   // Bara publicerade sidor förrenderas. Opublicerade sidor i
-  // shared/site-structure.ts byggs inte och ger 404.
+  // shared/site-structure.ts byggs inte och ger 404. Nuxt förrenderar annars
+  // alla sidfiler utan parametrar, därför undantas opublicerade sökvägar.
   nitro: {
     prerender: {
+      ignore: allPublicPages()
+        .filter(page => page.status !== 'published')
+        .map(page => page.path.replace(/\/$/, '')),
       routes: [
         '/build',
         ...publishedPages().map(page => page.path),

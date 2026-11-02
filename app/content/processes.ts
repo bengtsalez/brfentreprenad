@@ -1,14 +1,16 @@
 /**
  * Arbetsgångar som återanvänds på flera sidor.
  * Texterna beskriver bara bekräftade delar: adress, behov, önskad starttid,
- * statusuppföljning, helhetsansvar och personlig projektledare.
+ * helhetsansvar och personlig projektledare.
+ * Statusuppföljning i konto (bookingSteps, statusExamples) gäller bokningstjänsten
+ * och används bara när den finns (NUXT_PUBLIC_BOOKING_URL).
  */
 import type { ProcessStep, StatusExample } from '~/types/content'
 
 export const serviceSteps: ProcessStep[] = [
   {
-    title: 'Beställning',
-    description: 'Ni anger adress, beskriver vad som behöver göras och önskar en starttid.',
+    title: 'Förfrågan',
+    description: 'Ni anger adress, beskriver vad som behöver göras och om det finns önskemål om tid.',
   },
   {
     title: 'Bedömning',
@@ -16,7 +18,7 @@ export const serviceSteps: ProcessStep[] = [
   },
   {
     title: 'Planering',
-    description: 'Arbetet planeras in. I ärendets status ser ni om material inväntas och vilken vecka arbetet är inplanerat.',
+    description: 'Ni får besked om när arbetet kan utföras och om material behöver beställas. Inget är bokat förrän tiden är bekräftad.',
   },
   {
     title: 'Utförande',
