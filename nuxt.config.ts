@@ -53,9 +53,13 @@ export default defineNuxtConfig({
   // alla sidfiler utan parametrar, därför undantas opublicerade sökvägar.
   nitro: {
     prerender: {
-      ignore: allPublicPages()
-        .filter(page => page.status !== 'published')
-        .map(page => page.path.replace(/\/$/, '')),
+      ignore: [
+        ...allPublicPages()
+          .filter(page => page.status !== 'published')
+          .map(page => page.path.replace(/\/$/, '')),
+        // Byggsidans påhittade referens länkar hit men har ingen projektsida.
+        '/referensprojekt/exempelprojekt',
+      ],
       routes: [
         '/build',
         ...publishedPages().map(page => page.path),

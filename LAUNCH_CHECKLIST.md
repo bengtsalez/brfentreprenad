@@ -2,7 +2,7 @@
 
 Det som återstår innan webbplatsen kan lanseras. Allt i koden är implementerat och testat lokalt. Punkterna nedan kräver inställningar utanför repot eller uppgifter som bara företaget kan bekräfta.
 
-Uppgifterna under avsnitt 1 (Integritet), 2 och 3 lämnas i `UNDERLAG.md`. Bilder läggs i `underlag/bilder/`.
+Uppgifterna lämnas i `UNDERLAG.md`. Bilder läggs i `underlag/bilder/`.
 
 ## 1. Måste vara klart före lansering
 
@@ -28,33 +28,13 @@ Formulären är definierade i `public/__forms.html` och skickas med JavaScript t
 
 ### Integritet
 
-- [ ] Publicera en integritetspolicy (`/integritetspolicy/`). Formulären samlar namn, e-post, telefon och fritext. Policyn behöver personuppgiftsansvarig, ändamål, lagringstid (även i Netlify) och kontaktväg. Sätt sedan status `published` i `shared/site-structure.ts` och länka den från formuläret.
-- [ ] Lägg till organisationsnummer i `app/content/company.ts` och i den strukturerade datan på startsidan.
+- [x] Integritetspolicyn är publicerad (`/integritetspolicy/`) och länkad från formuläret och sidfoten. Den bygger på avsnitt 2 i `UNDERLAG.md`.
+- [ ] Låt Jonas granska texten. Särskilt meningarna om överföring till USA (Netlify) och om lagring enligt bokföringslagen när en förfrågan leder till uppdrag, som är standardformuleringar och inte kommer från underlaget.
+- [x] Organisationsnummer finns i `app/content/company.ts`, i sidfoten, på Om oss och i den strukturerade datan på startsidan.
 
 ## 2. Uppgifter som behöver bekräftas
 
-### Arbetssätt ("Så behåller styrelsen kontroll över projektet")
-
-Rutinerna finns i `app/content/board-control.ts`. Bara rutiner med `verified: true` visar vad styrelsen får.
-
-| Punkt | Status | Att bekräfta |
-| --- | --- | --- |
-| Omfattning | Visas som bekräftad | Att styrelsen får ett skriftligt underlag med omfattning och upplägg före beslut. Bygger på tidigare text i `processes.ts`. |
-| Tidplan | Visas som bekräftad | Att tidplanen ingår i underlaget före beslut. Bygger på tidigare text. |
-| Information till boende | Ej bekräftad | Vem som skriver och skickar information till boende, i vilken form (lappar, e-post, möten) och när. |
-| Ekonomisk uppföljning | Ej bekräftad | Hur ofta och i vilken form styrelsen får ekonomisk uppföljning under projektet. |
-| Tilläggsarbeten | Ej bekräftad | Hur tilläggsarbeten (ÄTA) beskrivs, prissätts och godkänns innan de utförs. |
-| Överlämning | Visas som bekräftad | Att det finns en gemensam slutgenomgång. Bekräfta även om dokumentation lämnas över, och i så fall vilken. |
-
-Sätt `verified: true` och skriv `deliverable` för varje rutin som bekräftas.
-
-### Personal
-
-Personerna i `app/content/staff.ts` visas på startsidan, Så arbetar vi, Om oss och Kontakt.
-
-- [ ] Bekräfta titlarna och vilka som är projektledare.
-- [ ] Fyll i `responsibility` (ansvarsområde) per person när det är bekräftat.
-- [ ] Bekräfta att alla fyra godkänner att namn, bild, telefon och e-post publiceras.
+Arbetssätt (`app/content/board-control.ts`) och personal (`app/content/staff.ts`) är ifyllda från `UNDERLAG.md` och visas som bekräftade.
 
 ### Bokningstjänst
 
@@ -66,17 +46,11 @@ Sidan `/sa-fungerar-servicebokningen/` och alla texter om konto och statusuppfö
 
 ### Referensprojekt
 
-Inga referenser finns i repot. Datamodell, sektion (`CaseStudySection`), projektsida (`/referensprojekt/<slug>/`) och översikt är klara men dolda. Per projekt behövs:
+`/referensprojekt/` är publicerad med ett projekt (balkongrenovering i Landskrona). Beställarens namn visas inte eftersom godkännande saknas.
 
-- [ ] Projektnamn och ort.
-- [ ] Beställare och skriftligt godkännande att namnet får publiceras (annars visas det inte).
-- [ ] Fastighetstyp och uppdrag.
-- [ ] Utgångsläge, omfattning, genomförande och resultat.
-- [ ] Vilket bolag som utförde arbetet och vilken roll det hade. Gäller särskilt projekt utförda av Byggproffs Skåne: relationen mellan bolagen och vem som var avtalspart ska bekräftas och beskrivas korrekt innan sådana projekt används.
-- [ ] Minst en bild med användningsrätt, gärna före och efter, med beskrivande alternativtext.
-- [ ] Kundomdöme, bara med personens godkännande (`approved: true`).
-
-Publicera genom att lägga projekten i `app/content/references.ts` och sätta `/referensprojekt/` till `published` i `shared/site-structure.ts`. Sektionen visas då automatiskt på startsidan och på tjänstesidor som projektet är kopplat till.
+- [ ] Bekräfta eller rätta resultattexten för Landskrona-projektet. Den är ett förslag (se `UNDERLAG.md`, avsnitt 6).
+- [ ] Fler projekt: fyll i ett nytt block i avsnitt 6 i `UNDERLAG.md` och lägg bilderna i `underlag/bilder/`. Projektet läggs sedan in i `app/content/references.ts` och bilderna, komprimerade, i `public/images/referenser/`. Sektionen visas automatiskt på startsidan och på de tjänstesidor projektet är kopplat till.
+- [ ] Projektsidorna (`/referensprojekt/<slug>/`) finns inte i `sitemap.xml`, eftersom den bara listar sidorna i `shared/site-structure.ts`. Google hittar dem ändå via länkarna från översikten.
 
 ### Bilder
 

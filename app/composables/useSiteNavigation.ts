@@ -63,6 +63,7 @@ export function useSiteNavigation() {
     sitePages.bookingGuide.path,
     sitePages.about.path,
     sitePages.contact.path,
+    sitePages.privacy.path,
   ])
 
   return {

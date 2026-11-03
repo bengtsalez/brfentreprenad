@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { companyDetails, phone } from '~/content/company'
+import { brandRelation, companyDetails, legalEntity, phone } from '~/content/company'
 
 /** Gemensam ram för publika sidor: hoppa-länk, sidhuvud, innehåll, sidfot och mobilens kontaktlist. */
 const { mainNav, footerNav, footerCompanyNav, inquiryLink } = useSiteNavigation()
@@ -25,7 +25,7 @@ const { mainNav, footerNav, footerCompanyNav, inquiryLink } = useSiteNavigation(
       :service-items="footerNav"
       :nav-items="footerCompanyNav"
       :contact-details="[...companyDetails, { label: 'Förfrågningar', value: 'Skicka en förfrågan', href: inquiryLink.href }]"
-      legal="© BRF Entreprenad"
+      :legal="`© BRF Entreprenad. ${brandRelation} Org.nr ${legalEntity.orgNumber}.`"
       logo-href="/"
     />
 

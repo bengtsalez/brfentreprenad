@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { sitePages } from '#shared/site-structure'
-import { office, officeAddress } from '~/content/company'
+import { brandRelation, legalEntity, office, officeAddress } from '~/content/company'
 import { staff } from '~/content/staff'
 import type { BenefitItem } from '~/types/content'
 
@@ -45,6 +45,7 @@ const benefits: BenefitItem[] = [
       :paragraphs="[
         'Vi arbetar brett inom bygg, från konkreta servicearbeten till större renoveringar. Samma part kan därför hantera både den enskilda reparationen och det större projektet.',
         'Som totalentreprenör tar vi helhetsansvar för uppdraget. Vid större projekt får ni en personlig projektledare som samordnar arbetet och håller er informerade.',
+        `${brandRelation} Organisationsnummer: ${legalEntity.orgNumber}.`,
       ]"
     >
       <p>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { findPage, isPublished, priorityServices, sitePages } from '#shared/site-structure'
 import { boardControl } from '~/content/board-control'
-import { companyDetails, email, office, phone } from '~/content/company'
+import { companyDetails, email, legalEntity, office, phone } from '~/content/company'
 import { publishedCaseStudies } from '~/content/references'
 import { servicePages } from '~/content/services'
 import { staff } from '~/content/staff'
@@ -23,6 +23,8 @@ usePageSeo({
     '@context': 'https://schema.org',
     '@type': 'GeneralContractor',
     'name': 'BRF Entreprenad',
+    'legalName': legalEntity.name,
+    'taxID': legalEntity.orgNumber,
     ...(siteUrl ? { url: `${siteUrl}/` } : {}),
     'telephone': phone.href.replace('tel:', ''),
     'email': email,

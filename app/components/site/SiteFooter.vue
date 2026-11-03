@@ -32,11 +32,6 @@ withDefaults(defineProps<{
         <p class="text-ink-muted">
           {{ description }}
         </p>
-        <p class="text-ink-muted">
-          BRF Entreprenad drivs av BPS AB, ett företag inom Byggproffsgruppen.</p>
-          <p>
-          Orgnr: 559073-9669
-        </p>
       </div>
 
       <nav v-if="serviceItems.length" aria-label="Tjänster i sidfoten">

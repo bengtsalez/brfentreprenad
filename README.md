@@ -2,7 +2,7 @@
 
 BRF Entreprenads hemsida. Målet är kvalificerade förfrågningar från bostadsrättsföreningar och förvaltare, med två tydliga vägar in: fastighetsservice (mindre arbeten) och planerade renoveringar (projekt).
 
-Publicerat: startsida, tjänsteöversikt, fem prioriterade tjänstesidor (fasadrenovering, balkongrenovering, dränering, fastighetsservice, porttelefoni och passersystem), sex övriga tjänsteområden, tre målgruppssidor, Så arbetar vi, Om oss och Kontakt. Informationsarkitekturen bygger på [docs/brfentreprenad-sitemap.md](docs/brfentreprenad-sitemap.md). `/build` är en intern katalog över byggdelarna.
+Publicerat: startsida, tjänsteöversikt, fem prioriterade tjänstesidor (fasadrenovering, balkongrenovering, dränering, fastighetsservice, porttelefoni och passersystem), sex övriga tjänsteområden, tre målgruppssidor, Så arbetar vi, Referensprojekt, Om oss, Kontakt och Integritetspolicy. Informationsarkitekturen bygger på [docs/brfentreprenad-sitemap.md](docs/brfentreprenad-sitemap.md). `/build` är en intern katalog över byggdelarna.
 
 Det som återstår före lansering finns i [LAUNCH_CHECKLIST.md](LAUNCH_CHECKLIST.md).
 
@@ -58,8 +58,8 @@ Komponenterna registreras automatiskt på filnamnet, oavsett mapp (`ui/UiButton.
 `shared/site-structure.ts` innehåller alla sidor från underlaget, även de som inte publiceras ännu. Varje sida har en status:
 
 - `published`: byggs, länkas i menyer och tas med i `sitemap.xml`.
-- `planned`: ingår i målbilden men saknar innehåll eller underlag (t.ex. undertjänster, referensprojekt och servicebokningen, som beskriver ett konto som inte finns ännu).
-- `unconfirmed`: erbjudandet eller uppgifterna måste bekräftas först (installationer och teknik, integritetspolicy, kakor).
+- `planned`: ingår i målbilden men saknar innehåll eller underlag (t.ex. undertjänster och servicebokningen, som beskriver ett konto som inte finns ännu).
+- `unconfirmed`: erbjudandet eller uppgifterna måste bekräftas först (installationer och teknik, kakor).
 
 Menyer, sidfot och listor filtrerar bort allt som inte är publicerat, så det finns inga länkar till tomma sidor. Opublicerade sidor förrenderas inte (`nitro.prerender.ignore` i `nuxt.config.ts`) och ger 404.
 
@@ -70,7 +70,7 @@ Så publiceras en undertjänst, t.ex. fönsterbyte:
 1. Lägg till innehållet i `app/content/services.ts` under sökvägen `/tjanster/fonster-och-dorrar/fonsterbyte/`. Fyll gärna i `needs`, `scope`, `planning`, `costFactors`, `residents` och `inquiryService` som på de prioriterade sidorna.
 2. Sätt status till `published` i `shared/site-structure.ts`.
 
-Mallen och routen (`pages/tjanster/[area]/[service].vue`) finns redan. Referensprojekt publiceras via `app/content/references.ts` (se LAUNCH_CHECKLIST.md).
+Mallen och routen (`pages/tjanster/[area]/[service].vue`) finns redan. Referensprojekt läggs till i `app/content/references.ts` med bilder i `public/images/referenser/` (se LAUNCH_CHECKLIST.md).
 
 Sektionerna får allt innehåll via props och slots. De innehåller ingen egen text, med undantag för etiketterna i kontaktformuläret.
 

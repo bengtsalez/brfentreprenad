@@ -1,8 +1,13 @@
-/**
- * Bekräftade företagsuppgifter. Organisationsnummer läggs till här
- * när det är bekräftat.
- */
+/** Bekräftade företagsuppgifter. */
 import type { ContactDetail } from '~/types/content'
+
+/** BRF Entreprenad är ett varumärke inom bolaget. */
+export const legalEntity = {
+  name: 'Byggproffs Skåne AB',
+  orgNumber: '559073-9669',
+}
+
+export const brandRelation = `BRF Entreprenad är ett varumärke inom ${legalEntity.name}.`
 
 export const office = {
   street: 'Östergatan 112',

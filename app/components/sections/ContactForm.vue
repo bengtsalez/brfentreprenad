@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isPublished, sitePages } from '#shared/site-structure'
 import { email, phone } from '~/content/company'
 import {
   flowForService,
@@ -371,6 +372,7 @@ const isSent = computed(() => status.value === 'sent' || status.value === 'demo-
         </UiButton>
         <p class="text-sm text-ink-muted">
           Uppgifterna används bara för att besvara förfrågan.
+          <a v-if="isPublished(sitePages.privacy.path)" :href="sitePages.privacy.path" class="text-link">Så hanterar vi personuppgifter</a>
         </p>
       </div>
     </form>

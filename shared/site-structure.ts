@@ -90,8 +90,8 @@ export const sitePages = {
   references: {
     path: '/referensprojekt/',
     title: 'Referensprojekt',
-    summary: 'Verifierade uppdrag. Publiceras när det finns verkligt material.',
-    status: 'planned',
+    summary: 'Verifierade uppdrag med utgångsläge, omfattning och resultat.',
+    status: 'published',
     stage: 3,
   },
   about: {
@@ -124,8 +124,8 @@ export const sitePages = {
   privacy: {
     path: '/integritetspolicy/',
     title: 'Integritetspolicy',
-    summary: 'Kräver uppgifter om personuppgiftsansvarig och faktisk hantering innan den skrivs.',
-    status: 'unconfirmed',
+    summary: 'Hur personuppgifter i förfrågningar hanteras.',
+    status: 'published',
     stage: 1,
   },
   cookies: {
