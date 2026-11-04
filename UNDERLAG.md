@@ -92,7 +92,7 @@ Beskriv hur ni faktiskt gör i dag. Det som står här kommer att stå på webbp
 
 ## 6. Referensprojekt
 
-Projekt 1 finns på webbplatsen. Fyll i Projekt 2 och kopiera det tomma blocket en gång per nytt projekt. Ett projekt publiceras bara om det har minst en bild som ni har rätt att använda.
+Kopiera blocket en gång per projekt. Ett projekt publiceras bara om det har minst en bild som ni har rätt att använda.
 
 Tjänster att välja bland: Fasadrenovering, Balkongrenovering, Dränering, Fastighetsservice, Porttelefoni och passersystem, Fönster och dörrar, Tak, Invändig renovering, Mark och utemiljö, Annan renovering.
 
@@ -113,48 +113,21 @@ Tjänster att välja bland: Fasadrenovering, Balkongrenovering, Dränering, Fast
   -
   -
 - Hur genomfördes arbetet, till exempel etapper, boende som bodde kvar, samordning: Etappvis per fastighet.
-- Resultat (förslag på webbplatsen just nu, rätta gärna): Balkongerna är reparerade och de som inte gick att laga är rivna, förstärkta och nygjutna.
+- Resultat: Nya och fräscha balkonger som håller i många år framöver
 - Bilder (filnamn i underlag/bilder/, vad bilden visar, före eller efter): Målning av ytskikt, balkong-landskrona-1.webp, Avlägsning av rostskadad stålbalk, balkong-landskrona-2.webp
   -
   -
 - Har ni rätt att använda bilderna (ja/nej, vem tog dem): Ja
-- Omdöme från beställaren, ordagrant (valfritt):
-- Namn och roll på den som lämnade omdömet:
+- Omdöme från beställaren, ordagrant (valfritt): 
+- Namn och roll på den som lämnade omdömet: 
 - Har personen godkänt att omdömet publiceras (ja/nej): Nej
-
-### Projekt 2
-- Projektnamn:
-- Ort:
-- År:
-- Beställare (förening eller förvaltare):
-- Har beställaren godkänt att namnet visas (ja/nej):
-- Fastighetstyp (till exempel "Flerbostadshus, 48 lägenheter, byggt 1965"):
-- Tjänst eller tjänster:
-- Uppdrag i en mening (till exempel "Fasadrenovering som totalentreprenad"):
-- Vilket bolag utförde arbetet:
-- Bolagets roll (totalentreprenör, underentreprenör, annat):
-- Vilket bolag var avtalspart med beställaren:
-- Utgångsläge, vad var problemet eller behovet:
-- Vad ingick i arbetet (en rad per moment):
-  -
-  -
-- Hur genomfördes arbetet, till exempel etapper, boende som bodde kvar, samordning:
-- Resultat:
-- Bilder (filnamn i underlag/bilder/, vad bilden visar, före eller efter):
-  -
-  -
-- Har ni rätt att använda bilderna (ja/nej, vem tog dem):
-- Omdöme från beställaren, ordagrant (valfritt):
-- Namn och roll på den som lämnade omdömet:
-- Har personen godkänt att omdömet publiceras (ja/nej):
-
 ---
 
 ## 7. Övriga bilder
 
 Bilder från verkliga projekt kan användas på startsidan och tjänstesidorna. Skriv en rad per bild.
 
-- Filnamn, vad bilden visar, vilket projekt, rätt att använda (ja/nej):
+- Filnamn, vad bilden visar, vilket projekt, rätt att använda (ja/nej): 
   -
 
 Delningsbilden för sociala medier finns redan (`public/images/og.jpg`). Skriv här om ni hellre vill använda en projektbild:
