@@ -9,8 +9,16 @@ import type { HeadingLevel } from '~/types/ui'
  * Sloten `aside` lägger en spalt bredvid texten på stora skärmar.
  * `backgroundVideo` spelar en ljudlös video i loop bakom innehållet.
  * `backgroundPoster` visas medan videon laddar och i stället för videon vid minskad rörelse.
+ * Videon läggs in först i webbläsaren och bara när användaren inte har bett om
+ * minskad rörelse. Den laddas då inte alls vid minskad rörelse, och den
+ * förrenderade sidan innehåller bara stillbilden.
  */
 const slots = useSlots()
+
+const playVideo = ref(false)
+onMounted(() => {
+  playVideo.value = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+})
 
 withDefaults(defineProps<{
   title: string
@@ -43,6 +51,7 @@ withDefaults(defineProps<{
       <div class="absolute inset-0 opacity-20">
         <img v-if="backgroundPoster" :src="backgroundPoster" alt="" class="absolute inset-0 size-full object-cover">
         <video
+          v-if="playVideo"
           :src="backgroundVideo"
           :poster="backgroundPoster"
           class="absolute inset-0 size-full object-cover motion-reduce:hidden"
@@ -51,6 +60,7 @@ withDefaults(defineProps<{
           loop
           playsinline
           preload="auto"
+          aria-hidden="true"
         />
       </div>
     </template>

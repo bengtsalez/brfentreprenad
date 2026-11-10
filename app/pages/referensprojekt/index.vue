@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { sitePages } from '#shared/site-structure'
 import { publishedCaseStudies } from '~/content/references'
+import type { LinkItem } from '~/types/content'
 
 /**
  * Referensöversikt. Sidan ger 404 tills /referensprojekt/ är publicerad i
@@ -13,10 +14,15 @@ if (!projects.length) {
 }
 
 usePageSeo({
-  title: 'Referensprojekt',
+  title: 'Referensprojekt: renovering av flerbostadshus',
   description: 'Renoveringar och fastighetsarbeten för bostadsrättsföreningar och fastighetsägare, med utgångsläge, omfattning och resultat.',
   path: sitePages.references.path,
 })
+
+const breadcrumbs: LinkItem[] = [
+  { label: 'Startsida', href: sitePages.home.path },
+  { label: sitePages.references.title, href: sitePages.references.path },
+]
 </script>
 
 <template>
@@ -25,7 +31,11 @@ usePageSeo({
       eyebrow="Referenser"
       title="Referensprojekt"
       lead="Uppdrag med utgångsläge, omfattning och vem som utförde arbetet."
-    />
+    >
+      <template #top>
+        <SiteBreadcrumbs :items="breadcrumbs" />
+      </template>
+    </HeroCompactSection>
     <CaseStudySection title="Genomförda projekt" :projects="projects" />
   </div>
 </template>

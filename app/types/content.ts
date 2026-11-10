@@ -1,15 +1,13 @@
 /** Datastrukturer för innehåll som skickas till sektionerna via props. */
 
+// Innehåll som även servern behöver (sitemap.xml, förrendering) definieras i shared/.
+import type { ImageAsset } from '#shared/content/types'
+
+export type { CaseStudy, ContentStatus, Guide, GuideSection, GuideSource, ImageAsset, LocationPage } from '#shared/content/types'
+
 export interface LinkItem {
   label: string
   href: string
-}
-
-export interface ImageAsset {
-  src: string
-  alt: string
-  width: number
-  height: number
 }
 
 export interface SelectOption {
@@ -141,44 +139,6 @@ export interface BoardControlItem {
   verified: boolean
 }
 
-/**
- * Referensprojekt. Publiceras bara med verkligt underlag och godkännande.
- * Fält som inte får publiceras lämnas tomma och visas då inte.
- */
-export interface CaseStudy {
-  slug: string
-  title: string
-  location: string
-  /** Beställarens namn. Visas bara om `clientPublishable` är true. */
-  client?: string
-  clientPublishable: boolean
-  /** T.ex. "Flerbostadshus, 48 lägenheter, 1960-tal". */
-  propertyType: string
-  /** Kort beskrivning av uppdraget, t.ex. "Fasadrenovering, totalentreprenad". */
-  assignment: string
-  /** Tjänstesidor projektet hör till (sökvägar i site-structure.ts). */
-  services: string[]
-  /** Formulärets tjänstevärde för "Diskutera ett liknande projekt". */
-  inquiryService?: string
-  year?: string
-  /** Bolaget som utförde arbetet. Måste anges, särskilt för projekt utförda av andra bolag. */
-  performedBy: string
-  /** Företagets faktiska roll, t.ex. "Totalentreprenör" eller "Underentreprenör för markarbeten". */
-  role: string
-  startingPoint: string
-  scope: string[]
-  execution: string
-  result: string
-  images: ImageAsset[]
-  testimonial?: {
-    quote: string
-    name: string
-    role: string
-    /** Godkänt av personen för publicering. Utan godkännande visas inget omdöme. */
-    approved: boolean
-  }
-}
-
 export interface ServicePageContent {
   /** Unik sidtitel och metabeskrivning. */
   metaTitle: string
@@ -197,6 +157,13 @@ export interface ServicePageContent {
   needs?: DetailItem[]
   /** Vad uppdraget kan omfatta. */
   scope?: { title: string, lead?: string, items: DetailItem[] }
+  /**
+   * Avvägningar som styrelsen behöver göra, t.ex. lagning eller större
+   * renovering. Leaden ger ett kort svar, raderna utvecklar det.
+   */
+  decisions?: { title: string, lead?: string, items: DetailItem[] }
+  /** Kort checklista, t.ex. vad som är bra att ha med i förfrågan. */
+  checklist?: { title: string, lead?: string, items: string[] }
   /** Hur arbetet planeras och genomförs, specifikt för tjänsten. */
   planning?: { title: string, lead?: string, steps: ProcessStep[] }
   /** Vad som påverkar omfattning och kostnad. */

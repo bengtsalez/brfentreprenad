@@ -24,9 +24,12 @@ export const phone = {
 
 export const email = 'info@brfentreprenad.se'
 
+/** Bekräftat verksamhetsområde. */
+export const serviceAreaText = 'Från Halmstad till Falsterbo'
+
 export const companyDetails: ContactDetail[] = [
   { label: 'Telefon', value: phone.display, href: phone.href },
   { label: 'E-post', value: email, href: `mailto:${email}` },
   { label: 'Kontor', value: officeAddress },
-  { label: 'Verksamhetsområde', value: 'Från Halmstad till Falsterbo' },
+  { label: 'Verksamhetsområde', value: serviceAreaText },
 ]

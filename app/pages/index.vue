@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { guidePath, publishedGuides } from '#shared/routes'
 import { findPage, isPublished, priorityServices, sitePages } from '#shared/site-structure'
 import { boardControl } from '~/content/board-control'
-import { companyDetails, email, legalEntity, office, phone } from '~/content/company'
+import { companyDetails, office, phone } from '~/content/company'
 import { publishedCaseStudies } from '~/content/references'
 import { servicePages } from '~/content/services'
 import { staff } from '~/content/staff'
@@ -13,36 +14,17 @@ import type { ContactDetail, EntryItem, FaqItem, InquiryChoice } from '~/types/c
  * Referenser visas först när verifierat underlag finns (app/content/references.ts).
  */
 
-const siteUrl = useRuntimeConfig().public.siteUrl.replace(/\/$/, '')
-
 usePageSeo({
   title: 'Renovering och fastighetsservice för bostadsrättsföreningar',
   description: 'Fasadrenovering, balkongrenovering, dränering, porttelefoni och fastighetsservice för bostadsrättsföreningar från Halmstad till Falsterbo, med en projektledare som samordnar arbetet.',
   path: sitePages.home.path,
-  jsonLd: {
-    '@context': 'https://schema.org',
-    '@type': 'GeneralContractor',
-    'name': 'BRF Entreprenad',
-    'legalName': legalEntity.name,
-    'taxID': legalEntity.orgNumber,
-    ...(siteUrl ? { url: `${siteUrl}/` } : {}),
-    'telephone': phone.href.replace('tel:', ''),
-    'email': email,
-    'address': {
-      '@type': 'PostalAddress',
-      'streetAddress': office.street,
-      'postalCode': office.zip,
-      'addressLocality': office.city,
-      'addressCountry': 'SE',
-    },
-    'areaServed': 'Från Halmstad till Falsterbo',
-  },
+  organization: true,
 })
 
 const { actions } = useSiteNavigation()
 
 const trustItems: ContactDetail[] = [
-  { label: 'Verksamhetsområde', value: 'Halmstad till Falsterbo' },
+  { label: 'Verksamhetsområde', value: 'Halmstad till Falsterbo', href: isPublished(sitePages.serviceArea.path) ? sitePages.serviceArea.path : undefined },
   { label: 'Arbetssätt', value: 'Totalentreprenör med projektledare' },
   { label: 'Kontor', value: `${office.street}, ${office.city}` },
   { label: 'Telefon', value: phone.display, href: phone.href },
@@ -84,6 +66,13 @@ const services: EntryItem[] = priorityServices
   })
 
 const references = publishedCaseStudies()
+
+// Guider för styrelser. Sektionen visas bara när minst en guide är publicerad.
+const guides: EntryItem[] = publishedGuides().map(guide => ({
+  title: guide.title,
+  description: guide.summary,
+  href: guidePath(guide),
+}))
 
 const faq: FaqItem[] = [
   {
@@ -188,6 +177,18 @@ const faq: FaqItem[] = [
         <a :href="sitePages.process.path" class="text-link font-semibold">Läs mer om hur vi arbetar</a>
       </p>
     </BoardControlSection>
+
+    <EntryListSection
+      v-if="guides.length"
+      eyebrow="Kunskap"
+      title="Guider för styrelser"
+      lead="Kortfattade underlag för styrelser som planerar en renovering, med beslutspunkter och källor."
+      :entries="guides"
+    >
+      <UiButton :href="sitePages.knowledge.path" variant="text" arrow class="mt-8">
+        Alla guider
+      </UiButton>
+    </EntryListSection>
 
     <StaffSection
       v-if="staff.length"

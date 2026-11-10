@@ -63,6 +63,18 @@ export const servicePages: Record<string, ServicePageContent> = {
         { title: 'Mark och utemiljö', description: 'Omläggning av plattor, lagning av trappor, räcken, grindar och staket.' },
       ],
     },
+    checklist: {
+      title: 'Det här är bra att ha med i förfrågan',
+      lead: 'Ju tydligare förfrågan är, desto färre frågor behöver vi ställa innan arbetet kan planeras.',
+      items: [
+        'Adress och var i fastigheten arbetet ska göras, till exempel trapphus, entré eller gård.',
+        'Vad som är fel eller vad som ska göras, och ungefär hur stort det är.',
+        'Om det brådskar, till exempel en dörr som inte går att låsa.',
+        'Hur vi får tillträde och vem vi kan kontakta på plats. Portkoder skrivs inte i förfrågan.',
+        'Andra arbeten på samma adress som kan göras vid samma tillfälle.',
+        'Vem som ska få besked när arbetet är klart.',
+      ],
+    },
     planning: {
       title: 'Så hanteras en serviceförfrågan',
       steps: [
@@ -151,11 +163,20 @@ export const servicePages: Record<string, ServicePageContent> = {
       lead: 'Omfattningen bestäms av fasadens material och skick. Det här är delar som ofta ingår.',
       items: [
         { title: 'Genomgång av fasaden', description: 'En bedömning av fasadens skick som grund för vad som behöver göras och vad som kan vänta.' },
-        { title: 'Putsfasad', description: 'Lagning av skadad puts, omputsning av hela eller delar av fasaden och avfärgning.' },
-        { title: 'Tegelfasad', description: 'Omfogning, byte av skadat tegel och reparation av murverk.' },
-        { title: 'Träfasad', description: 'Byte av panel, foder och knutar, åtgärder på bakomliggande konstruktion och målning.' },
+        { title: 'Putsfasad', description: 'Lagning av skadad puts, omputsning av hela eller delar av fasaden och avfärgning. Färg och puts behöver passa underlaget och den befintliga putsen.' },
+        { title: 'Tegelfasad', description: 'Omfogning där fogarna vittrat, byte av skadat tegel och reparation av murverk. Ofta räcker det att åtgärda de mest utsatta fasaderna.' },
+        { title: 'Träfasad', description: 'Byte av panel, foder och knutar, åtgärder på bakomliggande konstruktion och målning. Röta sitter ofta längst ned och kring fönster, där vatten blir kvar.' },
         { title: 'Detaljer runt fasaden', description: 'Fönsterbleck, sockel och andra detaljer som påverkar hur vatten leds bort från fasaden.' },
         { title: 'Tilläggsisolering', description: 'Isolering av fasaden kan utredas i samband med renoveringen, när det är aktuellt.' },
+      ],
+    },
+    decisions: {
+      title: 'Lagning, renovering och samordning',
+      lead: 'Kort svar: skicket avgör om lagning räcker, och detaljerna runt fasaden avgör hur arbetet behöver samordnas med andra åtgärder.',
+      items: [
+        { title: 'Lagning eller större renovering', description: 'Avgränsade skador kan lagas där de finns. Är skadorna spridda, eller visar genomgången att puts, fogar eller panel släpper på stora ytor, kan en renovering av hela fasader vara rimligare än upprepade lagningar. Allt syns inte från marken, så underlaget behöver beskriva hur skador som upptäcks under arbetet hanteras.' },
+        { title: 'Anslutningar', description: 'Fönsterbleck, sockel, takfot och infästningar för balkonger och stuprör är de ställen där vatten oftast tar sig in. De behöver ingå i bedömningen även om de är en liten del av ytan.' },
+        { title: 'Samordning med fönster och balkonger', description: 'Byts fönster eller renoveras balkonger inom några år kan arbetena göras med samma ställning. Det kräver att besluten tas i en ordning som gör samordningen möjlig.' },
       ],
     },
     planning: {
@@ -209,7 +230,7 @@ export const servicePages: Record<string, ServicePageContent> = {
       },
       {
         question: 'Behövs bygglov för fasadrenovering?',
-        answer: 'Det beror på om fasadens utseende ändras och var huset ligger. Frågan utreds tidigt i projektet så att den inte påverkar tidplanen i onödan.',
+        answer: 'Det beror på om fasadens utseende ändras. För flerbostadshus inom detaljplan krävs bygglov för byte av kulör eller fasadmaterial på en fasad som vetter mot gata eller annan allmän plats. Att byta till samma material och utförande räknas som underhåll. Detaljplanen kan innehålla andra regler, så frågan stäms av med kommunen tidigt i projektet.',
       },
       {
         question: 'Kan fasaden renoveras samtidigt som balkongerna?',
@@ -255,6 +276,18 @@ export const servicePages: Record<string, ServicePageContent> = {
         { title: 'Tätskikt och avvattning', description: 'Nytt tätskikt eller ytbeläggning och åtgärder för hur vatten leds bort.' },
         { title: 'Räcken och infästningar', description: 'Renovering, förstärkning eller byte av räcken och deras infästningar.' },
         { title: 'Samordning med fasaden', description: 'När fasaden också ska renoveras kan arbetena samordnas med samma ställning.' },
+      ],
+    },
+    decisions: {
+      title: 'Bedömning, reparation eller byte',
+      lead: 'Kort svar: genomgången av skadorna avgör om plattorna kan repareras eller behöver bytas, och räcken och infästningar bedöms i samma genomgång.',
+      items: [
+        { title: 'Bedömning av skadorna', description: 'Hur stor del av betongen som är skadad, hur armeringen ser ut och hur plattan är infäst. Bedömningen görs per balkong, eftersom skadorna ofta skiljer sig mellan lägen och väderstreck.' },
+        { title: 'Reparation av plattan', description: 'Skadad betong tas bort, armeringen åtgärdas och plattan lagas. Ofta får plattan också nytt tätskikt eller ytskikt.' },
+        { title: 'Byte av plattan', description: 'Är skadorna för stora för att lagas rivs plattan och ersätts. Det är ett större ingrepp som påverkar fasaden och de boende under längre tid.' },
+        { title: 'Räcken', description: 'Befintliga räcken kan ibland renoveras. Byts de mot ett annat utförande kan balkongernas utseende ändras, och då behöver det stämmas av med kommunen om bygglov krävs.' },
+        { title: 'Infästningar', description: 'Räckenas och plattornas infästningar i fasaden kontrolleras, eftersom de inte syns när balkongen används men avgör om konstruktionen är säker.' },
+        { title: 'Genomförande med boende kvar', description: 'De boende bor oftast kvar under arbetet. Det gör planeringen per balkong och informationen till varje lägenhet lika viktig som själva arbetet.' },
       ],
     },
     planning: {
@@ -351,6 +384,18 @@ export const servicePages: Record<string, ServicePageContent> = {
         { title: 'Återställning av ytor', description: 'Återställning av gräs, plattor, asfalt och planteringar efter schakten.' },
       ],
     },
+    decisions: {
+      title: 'Från fuktorsak till återställd gård',
+      lead: 'Kort svar: ta reda på varför fukten uppstår innan något grävs upp. Visar det sig att dräneringen är orsaken styrs omfattningen av ledningar i marken, åtkomst och vad som ska återställas.',
+      items: [
+        { title: 'Undersökning av fuktorsak', description: 'Marklutning nära huset, stuprör och takavvattning, dräneringens skick, dagvattenledningar, grundvattennivå och växtlighet nära huset gås igenom. Ibland räcker det att leda bort ytvatten.' },
+        { title: 'Ledningar i marken', description: 'Befintliga ledningar för vatten, avlopp, el och tele behöver vara kända innan schakten börjar. Det påverkar hur och var det går att gräva.' },
+        { title: 'Åtkomst', description: 'Hur nära huset maskiner kan komma, och hur entréer, trappor, cykelställ och parkering påverkas.' },
+        { title: 'Etapper', description: 'Arbetet görs ofta en sida av huset i taget, så att entréer och gångvägar går att använda under tiden.' },
+        { title: 'Fuktskydd och grundisolering', description: 'När grundmuren är frilagd kan den lagas, fuktskyddas och isoleras på utsidan i samma arbete.' },
+        { title: 'Vad återställningen omfattar', description: 'Gräs, plattor, asfalt, kantsten och planteringar. Vad som läggs tillbaka som det var och vad som görs om bestäms innan arbetet startar och står i underlaget.' },
+      ],
+    },
     planning: {
       title: 'Så planeras och genomförs en dränering',
       steps: [
@@ -443,6 +488,18 @@ export const servicePages: Record<string, ServicePageContent> = {
         { title: 'Passersystem', description: 'Taggläsare och kodlås på entréer och gemensamma utrymmen, och hur behörigheter ska hanteras.' },
         { title: 'Utbyggnad', description: 'Fler dörrar med passage, till exempel källare, cykelrum och tvättstuga.' },
         { title: 'Dörrar och lås', description: 'Justering och byte av lås, dörrstängare och beslag så att dörren stänger och låser som den ska.' },
+      ],
+    },
+    decisions: {
+      title: 'Inför ett byte eller en utbyggnad',
+      lead: 'Kort svar: utgå från det system som finns i dag. Det avgör om det går att bygga ut eller om ett byte är det rimliga, och hur mycket av kablage och dörrar som kan användas igen.',
+      items: [
+        { title: 'Befintligt system', description: 'Vilket system som finns, hur gammalt det är, vem som administrerar det i dag och om det går att få reservdelar.' },
+        { title: 'Kompatibilitet', description: 'Om nya läsare och porttelefoner kan anslutas till det befintliga systemet, och om befintliga taggar kan användas. Det skiljer sig mellan system och behöver kontrolleras i varje fall.' },
+        { title: 'Kabeldragning', description: 'Om befintligt kablage kan återanvändas eller om nya kablar behöver dras, och hur de i så fall dras i trapphus och mellan entréer.' },
+        { title: 'Antal entréer och dörrar', description: 'Vilka entréer och vilka gemensamma utrymmen som ska ha porttelefon eller läsare, till exempel källare, cykelrum och tvättstuga.' },
+        { title: 'Förvaltning av behörigheter', description: 'Vem som lägger upp och spärrar taggar, hur borttappade taggar hanteras och hur hantverkare och leverantörer får tillträde.' },
+        { title: 'Påverkan vid byte', description: 'Hur länge varje entré påverkas, hur boende får nya taggar och vad som händer med de gamla.' },
       ],
     },
     planning: {

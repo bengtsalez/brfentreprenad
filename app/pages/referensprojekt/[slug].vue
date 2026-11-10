@@ -11,5 +11,5 @@ if (!project) {
 </script>
 
 <template>
-  <CaseStudyTemplate v-if="project" :project="project" />
+  <CaseStudyTemplate v-if="project" :key="project.slug" :project="project" />
 </template>

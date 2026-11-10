@@ -26,7 +26,7 @@ const faq: FaqItem[] = [
 ]
 
 usePageSeo({
-  title: 'Så arbetar vi',
+  title: 'Så arbetar vi med service och renoveringsprojekt',
   description: 'Så går servicearbeten och renoveringsprojekt till hos BRF Entreprenad, och hur styrelsen behåller kontroll över omfattning, tidplan, information till boende och överlämning.',
   path: sitePages.process.path,
   jsonLd: faqJsonLd(faq),

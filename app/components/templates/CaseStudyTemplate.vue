@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { guidePath, locationPath, publishedGuides } from '#shared/routes'
 import { findPage, sitePages } from '#shared/site-structure'
 import { inquiryHref } from '~/content/inquiry'
-import { caseStudyPath } from '~/content/references'
+import { caseStudyPath, locationForCaseStudy } from '~/content/references'
 import type { CaseStudy, LinkItem } from '~/types/content'
 
 /** Projektsida för ett referensprojekt. */
@@ -11,11 +12,24 @@ const props = defineProps<{
 
 const path = caseStudyPath(props.project)
 
+const [heroImage, ...galleryImages] = props.project.images
+
+// Ortsnamnet läggs bara till om det inte redan finns i projektets titel.
+const seoTitle = props.project.title.includes(props.project.location)
+  ? `${props.project.title}: referensprojekt`
+  : `${props.project.title} i ${props.project.location}`
+
+/** Kortar beskrivningen vid ett ordslut, så att den inte klipps mitt i ett ord. */
+function shorten(text: string, max = 160): string {
+  if (text.length <= max) return text
+  return `${text.slice(0, text.lastIndexOf(' ', max - 1))} …`
+}
+
 usePageSeo({
-  title: `${props.project.title}, ${props.project.location}`,
-  description: `${props.project.assignment} i ${props.project.location}. ${props.project.startingPoint}`.slice(0, 160),
+  title: seoTitle,
+  description: shorten(`${props.project.assignment} i ${props.project.location}. ${props.project.startingPoint}`),
   path,
-  image: props.project.images[0]?.src,
+  image: heroImage,
 })
 
 const breadcrumbs: LinkItem[] = [
@@ -36,7 +50,16 @@ const facts = computed(() => [
 
 const serviceLinks = publishedLinks(props.project.services)
 const similarAction = { label: 'Diskutera ett liknande projekt', href: inquiryHref('projekt', props.project.inquiryService) }
-const [heroImage, ...galleryImages] = props.project.images
+
+// Ortssida och guider visas bara när de är publicerade.
+const location = locationForCaseStudy(props.project)
+const readMore: LinkItem[] = [
+  ...serviceLinks,
+  ...(location ? [{ label: `Vi i ${location.name}`, href: locationPath(location) }] : []),
+  ...publishedGuides()
+    .filter(guide => guide.services.some(service => props.project.services.includes(service)))
+    .map(guide => ({ label: guide.title, href: guidePath(guide) })),
+]
 const serviceTitle = findPage(props.project.services[0] ?? '')?.title
 </script>
 
@@ -130,6 +153,19 @@ const serviceTitle = findPage(props.project.services[0] ?? '')?.title
           >
         </li>
       </ul>
+    </UiSection>
+
+    <UiSection v-if="readMore.length" spacing="compact">
+      <nav aria-labelledby="las-vidare">
+        <UiHeading id="las-vidare" :level="2" size="sm" class="mb-4">
+          Läs vidare
+        </UiHeading>
+        <ul class="space-y-1">
+          <li v-for="link in readMore" :key="link.href">
+            <a :href="link.href" class="text-link inline-flex min-h-11 items-center font-semibold">{{ link.label }}</a>
+          </li>
+        </ul>
+      </nav>
     </UiSection>
 
     <CtaSection

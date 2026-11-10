@@ -10,9 +10,10 @@ import { staff } from '~/content/staff'
  * så att det finns kvar vid omladdning.
  */
 usePageSeo({
-  title: 'Kontakt',
+  title: 'Kontakta BRF Entreprenad',
   description: 'Skicka en serviceförfrågan eller berätta om ett planerat projekt. BRF Entreprenad arbetar med bostadsrättsföreningar och förvaltare från Halmstad till Falsterbo.',
   path: sitePages.contact.path,
+  organization: true,
 })
 
 const { hasBooking, actions } = useSiteNavigation()

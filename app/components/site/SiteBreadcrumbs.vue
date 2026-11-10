@@ -1,10 +1,30 @@
 <script setup lang="ts">
 import type { LinkItem } from '~/types/content'
 
-/** Brödsmulor. Sista ledet är den aktuella sidan och visas utan länk. */
-defineProps<{
+/**
+ * Brödsmulor. Sista ledet är den aktuella sidan och visas utan länk.
+ * Samma länkar läggs ut som BreadcrumbList i strukturerad data, så att synliga
+ * brödsmulor och strukturerad data inte kan skilja sig åt.
+ */
+const props = withDefaults(defineProps<{
   items: LinkItem[]
-}>()
+  /** Lägg ut BreadcrumbList. Stängs av där brödsmulorna bara är exempel. */
+  structuredData?: boolean
+}>(), {
+  structuredData: true,
+})
+
+const siteUrl = useRuntimeConfig().public.siteUrl.replace(/\/$/, '')
+
+if (props.structuredData && siteUrl && props.items.length > 1) {
+  useHead({
+    script: [{
+      key: 'ld-breadcrumbs',
+      type: 'application/ld+json',
+      innerHTML: serializeJsonLd({ '@context': 'https://schema.org', ...breadcrumbJsonLd(props.items, siteUrl) }),
+    }],
+  })
+}
 </script>
 
 <template>

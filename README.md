@@ -2,7 +2,7 @@
 
 BRF Entreprenads hemsida. Målet är kvalificerade förfrågningar från bostadsrättsföreningar och förvaltare, med två tydliga vägar in: fastighetsservice (mindre arbeten) och planerade renoveringar (projekt).
 
-Publicerat: startsida, tjänsteöversikt, fem prioriterade tjänstesidor (fasadrenovering, balkongrenovering, dränering, fastighetsservice, porttelefoni och passersystem), sex övriga tjänsteområden, tre målgruppssidor, Så arbetar vi, Referensprojekt, Om oss, Kontakt och Integritetspolicy. Informationsarkitekturen bygger på [docs/brfentreprenad-sitemap.md](docs/brfentreprenad-sitemap.md). `/build` är en intern katalog över byggdelarna.
+Publicerat: startsida, tjänsteöversikt, fem prioriterade tjänstesidor (fasadrenovering, balkongrenovering, dränering, fastighetsservice, porttelefoni och passersystem), sex övriga tjänsteområden, tre målgruppssidor, Så arbetar vi, Referensprojekt med projektsida, Verksamhetsområde, Kunskap med tre guider, Om oss, Kontakt och Integritetspolicy. Status för SEO-arbetet finns i [docs/seo-geo-status.md](docs/seo-geo-status.md). Informationsarkitekturen bygger på [docs/brfentreprenad-sitemap.md](docs/brfentreprenad-sitemap.md). `/build` är en intern katalog över byggdelarna.
 
 Det som återstår före lansering finns i [LAUNCH_CHECKLIST.md](LAUNCH_CHECKLIST.md).
 
@@ -17,6 +17,8 @@ npm install          # installera beroenden
 npm run dev          # utvecklingsserver, öppna http://localhost:3000
 npm run typecheck    # typkontroll med vue-tsc
 npm run generate     # statiskt produktionsbygge till dist/
+npm test             # publiceringsregler och sitemap (scripts/routes.test.ts)
+npm run check:dist   # kontrollerar det genererade bygget i dist/
 npm run preview      # förhandsgranska bygget lokalt
 ```
 
@@ -27,6 +29,8 @@ npm run preview      # förhandsgranska bygget lokalt
 ```
 shared/
   site-structure.ts        Alla sidor i målbilden med status och etapp (används av app och server)
+  routes.ts                Register över publicerade adresser: länkar, förrendering och sitemap.xml
+  content/                 Referensprojekt, guider och ortssidor med publiceringsstatus
 app/
   assets/css/main.css      Designtokens, bastypografi och gemensamma utilities
   components/
@@ -45,7 +49,8 @@ app/
   build-page/              Byggsidans exempelinnehåll (påhittat, används inte på riktiga sidor)
   types/                   Typer för props (ui.ts) och innehåll (content.ts)
   utils/                   Små hjälpfunktioner (auto-importeras)
-server/routes/sitemap.xml.ts  Teknisk sitemap med publicerade sidor
+server/routes/sitemap.xml.ts  Teknisk sitemap från shared/routes.ts
+scripts/                   Tester av publiceringsreglerna och kontroll av dist/
 public/__forms.html        Formulärdefinitioner för Netlify Forms
 docs/                      Underlag: sitemap och innehållsdirektiv
 public/                    Statiska filer: favicon, robots.txt, platshållarbilder
@@ -70,7 +75,15 @@ Så publiceras en undertjänst, t.ex. fönsterbyte:
 1. Lägg till innehållet i `app/content/services.ts` under sökvägen `/tjanster/fonster-och-dorrar/fonsterbyte/`. Fyll gärna i `needs`, `scope`, `planning`, `costFactors`, `residents` och `inquiryService` som på de prioriterade sidorna.
 2. Sätt status till `published` i `shared/site-structure.ts`.
 
-Mallen och routen (`pages/tjanster/[area]/[service].vue`) finns redan. Referensprojekt läggs till i `app/content/references.ts` med bilder i `public/images/referenser/` (se LAUNCH_CHECKLIST.md).
+Mallen och routen (`pages/tjanster/[area]/[service].vue`) finns redan.
+
+Dynamiskt innehåll har egen status (`published` eller `draft`) i `shared/content/`:
+
+- Referensprojekt: `shared/content/references.ts`, bilder i `public/images/referenser/`. Kräver minst en bild.
+- Guider: `shared/content/guides.ts`. Kräver källor. Sätt `published` till publiceringsdagen.
+- Ortssidor: `shared/content/locations.ts`. Kräver verifierad lokal fakta.
+
+Publicerat innehåll förrenderas, tas med i `sitemap.xml` och länkas automatiskt. Utkast byggs inte och ger 404. Kör `npm run generate && npm run check:dist` efter ändringar.
 
 Sektionerna får allt innehåll via props och slots. De innehåller ingen egen text, med undantag för etiketterna i kontaktformuläret.
 
@@ -116,7 +129,7 @@ Variablerna läses vid bygget, så sajten måste byggas om när de ändras.
 
 ### Mätning
 
-`trackEvent()` i `app/composables/useTracking.ts` skickar `phone_click`, `email_click`, `form_start`, `lead_submitted` och `form_error` med tjänst, flöde och sida. Inga personuppgifter eller fritexter skickas. Händelserna hamnar i `window.dataLayer` om ett verktyg installeras, och som DOM-händelsen `brf:track`. Inget analysverktyg är aktiverat.
+`trackEvent()` i `app/composables/useTracking.ts` skickar `phone_click`, `email_click`, `form_start`, `lead_submitted` och `form_error` med tjänst, flöde, sida och landningssida. Inga personuppgifter eller fritexter skickas. Händelserna hamnar i `window.dataLayer` om ett verktyg installeras, och som DOM-händelsen `brf:track`. Inget analysverktyg är aktiverat.
 
 ## Innan lansering
 

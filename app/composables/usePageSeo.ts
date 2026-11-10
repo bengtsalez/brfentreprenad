@@ -1,52 +1,69 @@
+import { normalizePath } from '#shared/site-structure'
+
+const DEFAULT_IMAGE = {
+  src: '/images/og.jpg',
+  alt: 'BRF Entreprenad. Renovering och fastighetsservice för bostadsrättsföreningar.',
+  width: 1200,
+  height: 630,
+}
+
 /**
- * Sidtitel, metabeskrivning, kanonisk URL och delning för en publik sida.
- * Kanonisk URL sätts bara när produktionsdomänen är känd (NUXT_PUBLIC_SITE_URL).
- * `image` används för delning. Utan egen bild används den generella delningsbilden.
- * `jsonLd` läggs in som strukturerad data. Använd bara verifierbara uppgifter.
+ * Sidtitel, metabeskrivning, kanonisk URL, delning och strukturerad data för en publik sida.
+ *
+ * - Titeln får varumärket som ändelse via brandedTitle(), utan dubblering.
+ * - Kanonisk URL är alltid produktionsdomänen + sidans sökväg med avslutande
+ *   snedstreck. Parametrar (?typ=, utm_ …) ingår aldrig.
+ * - `image` används för delning. Utan egen bild används den generella delningsbilden.
+ * - `organization` lägger till företagsidentiteten (med stabilt @id).
+ * - `jsonLd` läggs till i samma @graph. Använd bara verifierbara uppgifter.
+ * - Brödsmulornas BreadcrumbList läggs till av SiteBreadcrumbs.
+ * Alla script-element har en fast `key`, så att de ersätts i stället för att
+ * dupliceras vid navigering.
  */
-export function usePageSeo({ title, description, path, image = '/images/og.jpg', jsonLd }: {
+export function usePageSeo({ title, description, path, image, type = 'website', organization = false, jsonLd }: {
   title: string
   description: string
   path: string
-  image?: string
+  image?: { src: string, alt: string, width?: number, height?: number }
+  type?: 'website' | 'article'
+  organization?: boolean
   jsonLd?: Record<string, unknown> | Record<string, unknown>[]
 }) {
   const siteUrl = useRuntimeConfig().public.siteUrl.replace(/\/$/, '')
+  const canonicalPath = normalizePath(path)
   const absolute = (value: string) => (siteUrl ? `${siteUrl}${value}` : undefined)
+  const shareImage = image ?? DEFAULT_IMAGE
+  const fullTitle = brandedTitle(title)
 
   useSeoMeta({
     title,
     description,
-    ogTitle: title,
+    ogTitle: fullTitle,
     ogDescription: description,
-    ogType: 'website',
+    ogType: type,
     ogLocale: 'sv_SE',
     ogSiteName: 'BRF Entreprenad',
-    ogUrl: absolute(path),
-    ogImage: absolute(image),
-    ogImageWidth: image === '/images/og.jpg' ? 1200 : undefined,
-    ogImageHeight: image === '/images/og.jpg' ? 630 : undefined,
-    ogImageAlt: image === '/images/og.jpg' ? 'BRF Entreprenad. Renovering och fastighetsservice för bostadsrättsföreningar.' : undefined,
+    ogUrl: absolute(canonicalPath),
+    ogImage: absolute(shareImage.src),
+    ogImageWidth: shareImage.width,
+    ogImageHeight: shareImage.height,
+    ogImageAlt: shareImage.alt,
     twitterCard: 'summary_large_image',
   })
 
+  const graph = [
+    ...(organization ? [organizationJsonLd(siteUrl)] : []),
+    ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
+  ]
+
   useHead({
-    link: siteUrl ? [{ rel: 'canonical', href: `${siteUrl}${path}` }] : [],
-    script: jsonLd
-      ? [{ type: 'application/ld+json', innerHTML: JSON.stringify(jsonLd) }]
+    link: siteUrl ? [{ key: 'canonical', rel: 'canonical', href: `${siteUrl}${canonicalPath}` }] : [],
+    script: graph.length
+      ? [{
+          key: 'ld-page',
+          type: 'application/ld+json',
+          innerHTML: serializeJsonLd({ '@context': 'https://schema.org', '@graph': graph }),
+        }]
       : [],
   })
-}
-
-/** FAQPage-data från samma frågor som visas på sidan. */
-export function faqJsonLd(items: { question: string, answer: string }[]) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    'mainEntity': items.map(item => ({
-      '@type': 'Question',
-      'name': item.question,
-      'acceptedAnswer': { '@type': 'Answer', 'text': item.answer },
-    })),
-  }
 }

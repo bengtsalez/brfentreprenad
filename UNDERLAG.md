@@ -131,3 +131,80 @@ Bilder från verkliga projekt kan användas på startsidan och tjänstesidorna. 
   -
 
 Delningsbilden för sociala medier finns redan (`public/images/og.jpg`). Skriv här om ni hellre vill använda en projektbild:
+
+---
+
+## 8. Guider för styrelser (kunskapsdelen)
+
+Tre guider är publicerade under `/kunskap/`. De bygger på Boverket och bostadsrättslagen (källorna står i varje guide) och står med BRF Entreprenad som författare. En guide är ett internt utkast. Texterna finns i `shared/content/guides.ts`.
+
+### Publicerade guider. Granska gärna och rätta direkt här.
+- Vad påverkar kostnaden för fasadrenovering i en BRF? Stämmer texten (ja/nej, rätta annars):
+- Fukt i föreningens källare: vad behöver undersökas? Stämmer texten:
+- Checklista inför offertförfrågan på en större renovering. Stämmer texten:
+
+### Författare och faktagranskare
+En person visas bara om hen har godkänt det.
+- Ska en person stå som författare i stället för BRF Entreprenad? Namn och titel:
+- Vem kan faktagranska guiderna? Namn, titel och godkännande att namnet visas:
+- Datum då guiderna publicerades (sätts som `published` i guiden):
+
+### Utkast: Renovera eller byta balkongplattor?
+Publiceras när följande finns:
+- Faktagranskning av en person med ansvar för balkongprojekt (namn, titel, godkännande att visas):
+- Hur ni i praktiken bedömer om en platta kan repareras eller behöver bytas (några meningar):
+- Får guiden länka till Landskrona-projektet som exempel (ja/nej):
+
+---
+
+## 9. Verksamhetsområde och orter
+
+Sidan `/verksamhetsomrade/` är publicerad med det som är bekräftat: Halmstad till Falsterbo och kontoret i Landskrona.
+
+### Området
+- Ingår hela Skåne, eller bara orterna längs kusten mellan Halmstad och Falsterbo? Beskriv gränsen:
+- Finns det kommuner eller orter ni inte tar uppdrag i:
+- Har ni fler kontor eller arbetsplatser än Östergatan 112 i Landskrona (ja/nej, vilka):
+
+### Ortssidor
+En ortssida publiceras först när den har egen lokal fakta. Utkast finns för Landskrona, Helsingborg och Malmö i `shared/content/locations.ts`. Fyll i per ort:
+
+#### Landskrona
+- Andra genomförda uppdrag i Landskrona (typ av arbete, år, får nämnas ja/nej):
+- Delar av staden eller typ av bebyggelse ni oftast arbetar med:
+- Lokala förutsättningar ni har erfarenhet av (till exempel kulturmiljöer, kommunens handläggning, vanliga skador):
+- Kontaktperson för uppdrag i Landskrona:
+
+#### Helsingborg
+- Genomförda uppdrag (typ av arbete, år, får nämnas ja/nej):
+- Projektbilder med användningsrätt (filnamn i `underlag/bilder/`):
+- Lokala förutsättningar ni har erfarenhet av:
+- Kontaktperson:
+
+#### Malmö
+- Genomförda uppdrag (typ av arbete, år, får nämnas ja/nej):
+- Projektbilder med användningsrätt (filnamn i `underlag/bilder/`):
+- Lokala förutsättningar ni har erfarenhet av:
+- Kontaktperson:
+
+---
+
+## 10. Referensprojekt: det som saknas
+
+Avsnitt 6 har ett projekt. Målet är minst ett verkligt projekt inom vardera fasad, balkong och dränering.
+
+- Landskrona-projektet: resultattexten på webbplatsen är omformulerad till "Balkongerna är reparerade och de som inte gick att laga är rivna, förstärkta och nygjutna." Stämmer den (ja/nej, rätta annars):
+- Fasadprojekt: fyll i ett nytt block i avsnitt 6.
+- Dräneringsprojekt: fyll i ett nytt block i avsnitt 6.
+- Finns före- och efterbilder från något projekt, med användningsrätt:
+
+---
+
+## 11. Mätning
+
+Inget analysverktyg är installerat. Händelserna är förberedda (se `LAUNCH_CHECKLIST.md`, avsnitt 4).
+
+- Vilket analysverktyg ska användas (till exempel Google Analytics via Tag Manager, Plausible, Matomo eller inget):
+- Vem ansvarar för kontot och samtyckesfrågan:
+- Har företaget tillgång till Google Search Console för brfentreprenad.se (ja/nej, vem):
+- Finns en Google Business Profile för BRF Entreprenad (ja/nej, vem administrerar den):

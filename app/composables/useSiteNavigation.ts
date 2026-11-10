@@ -1,4 +1,5 @@
-import { findPage, isPublished, priorityServices, serviceAreas, sitePages, type SitePage } from '#shared/site-structure'
+import { isRoutePublished } from '#shared/routes'
+import { findPage, priorityServices, serviceAreas, sitePages, type SitePage } from '#shared/site-structure'
 import { inquiryHref } from '~/content/inquiry'
 import type { ActionKind, EntryItem, LinkItem, NavItem } from '~/types/content'
 
@@ -6,10 +7,13 @@ function linkTo(page: SitePage, label = page.title): LinkItem {
   return { label, href: page.path }
 }
 
-/** Länkar till de sökvägar som är publicerade, med sidans titel som etikett. */
+/**
+ * Länkar till de sökvägar som är publicerade enligt shared/routes.ts, med
+ * sidans titel som etikett. Utkast och tomma översikter filtreras bort.
+ */
 export function publishedLinks(paths: string[]): LinkItem[] {
   return paths
-    .filter(isPublished)
+    .filter(path => isRoutePublished(path) && findPage(path))
     .map(path => linkTo(findPage(path)!))
 }
 
@@ -34,7 +38,7 @@ export function useSiteNavigation() {
     linkTo(sitePages.references, 'Referenser'),
     linkTo(sitePages.about, 'Om oss'),
     linkTo(sitePages.contact),
-  ].filter(item => ('children' in item ? item.children?.length : isPublished(item.href!)))
+  ].filter(item => ('children' in item ? item.children?.length : isRoutePublished(item.href!)))
 
   if (accountUrl) mainNav.push({ label: 'Mina ärenden', href: accountUrl })
 
@@ -61,6 +65,8 @@ export function useSiteNavigation() {
     ...audienceLinks.map(link => link.href),
     sitePages.process.path,
     sitePages.bookingGuide.path,
+    sitePages.knowledge.path,
+    sitePages.serviceArea.path,
     sitePages.about.path,
     sitePages.contact.path,
     sitePages.privacy.path,
@@ -82,7 +88,7 @@ export function useSiteNavigation() {
  * visas undertjänsterna som punkter (utan länk tills de publiceras).
  */
 export function publishedEntries(paths: string[]): EntryItem[] {
-  return paths.filter(isPublished).map((path) => {
+  return paths.filter(path => isRoutePublished(path)).map((path) => {
     const page = findPage(path)!
     const area = serviceAreas.find(item => item.path === page.path)
     return {

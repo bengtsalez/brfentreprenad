@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from '@tailwindcss/vite'
-import { allPublicPages, publishedPages } from './shared/site-structure'
+import { publishedRoutes, unpublishedPaths } from './shared/routes.ts'
 
 // Projektet har inte @types/node, så process deklareras här.
 declare const process: { env: Record<string, string | undefined> }
@@ -48,21 +48,32 @@ export default defineNuxtConfig({
     },
   },
 
-  // Bara publicerade sidor förrenderas. Opublicerade sidor i
-  // shared/site-structure.ts byggs inte och ger 404. Nuxt förrenderar annars
-  // alla sidfiler utan parametrar, därför undantas opublicerade sökvägar.
+  // Bara publicerade adresser förrenderas, enligt det gemensamma registret i
+  // shared/routes.ts (samma källa som sitemap.xml och länkarna i appen).
+  // Dynamiska sidor (referensprojekt, guider, ortssidor) listas uttryckligen och
+  // hittas inte bara via länkar. Opublicerade sidor och utkast byggs inte och
+  // ger 404. Nuxt förrenderar annars alla sidfiler utan parametrar, därför
+  // undantas opublicerade sökvägar.
   nitro: {
+    hooks: {
+      // 404.html och 200.html är skal som renderas i webbläsaren. noindex läggs
+      // in statiskt så att det inte är beroende av JavaScript. Netlify svarar
+      // med status 404 för okända adresser och använder 404.html som innehåll.
+      'prerender:generate'(route) {
+        if ((route.route === '/404.html' || route.route === '/200.html') && typeof route.contents === 'string') {
+          route.contents = route.contents.replace('<head>', '<head><meta name="robots" content="noindex">')
+        }
+      },
+    },
     prerender: {
       ignore: [
-        ...allPublicPages()
-          .filter(page => page.status !== 'published')
-          .map(page => page.path.replace(/\/$/, '')),
+        ...unpublishedPaths().map(path => path.replace(/\/$/, '')),
         // Byggsidans påhittade referens länkar hit men har ingen projektsida.
         '/referensprojekt/exempelprojekt',
       ],
       routes: [
         '/build',
-        ...publishedPages().map(page => page.path),
+        ...publishedRoutes().map(route => route.path),
         ...(siteUrl ? ['/sitemap.xml'] : []),
       ],
     },

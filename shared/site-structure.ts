@@ -3,6 +3,9 @@
  *
  * Här finns alla planerade sidor, även de som inte publiceras ännu. Bara sidor
  * med status "published" får byggas, länkas och tas med i sitemap.xml.
+ * Dynamiskt innehåll (referensprojekt, guider, ortssidor) finns i
+ * shared/content/. Det samlade registret över publicerade adresser är
+ * shared/routes.ts.
  * Filen används både av appen och av servern (sitemap.xml), så den får inte
  * importera något från app/.
  *
@@ -101,11 +104,21 @@ export const sitePages = {
     status: 'published',
     stage: 1,
   },
+  // Ortssidor under /verksamhetsomrade/[ort]/ finns i shared/content/locations.ts.
   serviceArea: {
     path: '/verksamhetsomrade/',
-    title: 'Från Halmstad till Falsterbo',
-    summary: 'Geografisk täckning och arbetssätt.',
-    status: 'planned',
+    title: 'Verksamhetsområde',
+    summary: 'Från Halmstad till Falsterbo, med kontor i Landskrona.',
+    status: 'published',
+    stage: 3,
+  },
+  // Guiderna finns i shared/content/guides.ts. Översikten visas bara när minst
+  // en guide är publicerad (shared/routes.ts).
+  knowledge: {
+    path: '/kunskap/',
+    title: 'Kunskap för styrelser',
+    summary: 'Guider om renovering, underhåll och upphandling för bostadsrättsföreningar.',
+    status: 'published',
     stage: 3,
   },
   contact: {

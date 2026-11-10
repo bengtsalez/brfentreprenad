@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { guidePath, publishedGuides } from '#shared/routes'
 import { serviceAreas, sitePages, type SitePage } from '#shared/site-structure'
 import { companyDetails, phone } from '~/content/company'
 import { inquiryFlows } from '~/content/inquiry'
@@ -29,6 +30,11 @@ usePageSeo({
   path: page.path,
   jsonLd: content.faq.length ? faqJsonLd(content.faq) : undefined,
 })
+
+// Publicerade guider som hör till tjänsten. Utkast länkas aldrig.
+const guideLinks: LinkItem[] = publishedGuides()
+  .filter(guide => guide.services.includes(page.path))
+  .map(guide => ({ label: guide.title, href: guidePath(guide) }))
 
 const primaryAction: LinkItem = {
   label: isService ? 'Skicka serviceförfrågan' : 'Prata med en projektledare',
@@ -102,6 +108,16 @@ const audienceLinks = publishedLinks(content.audiences)
       layout="rows"
     />
 
+    <DetailListSection
+      v-if="content.decisions"
+      :title="content.decisions.title"
+      :lead="content.decisions.lead"
+      :items="content.decisions.items"
+      layout="rows"
+      background="subtle"
+      eyebrow="Att ta ställning till"
+    />
+
     <EntryListSection
       v-if="examples.length"
       :title="content.examplesTitle"
@@ -140,6 +156,14 @@ const audienceLinks = publishedLinks(content.audiences)
       background="subtle"
     />
 
+    <TextSection
+      v-if="content.checklist"
+      :title="content.checklist.title"
+      :paragraphs="content.checklist.lead ? [content.checklist.lead] : []"
+      :list="content.checklist.items"
+      eyebrow="Checklista"
+    />
+
     <CaseStudySection
       title="Referensprojekt"
       :projects="references"
@@ -158,8 +182,18 @@ const audienceLinks = publishedLinks(content.audiences)
       :service="content.inquiryService"
     />
 
-    <UiSection v-if="relatedLinks.length || audienceLinks.length" spacing="compact">
-      <div class="grid gap-10 md:grid-cols-2">
+    <UiSection v-if="relatedLinks.length || audienceLinks.length || guideLinks.length" spacing="compact">
+      <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <nav v-if="guideLinks.length" aria-labelledby="guider-for-styrelsen">
+          <UiHeading id="guider-for-styrelsen" :level="2" size="sm" class="mb-4">
+            Guider för styrelsen
+          </UiHeading>
+          <ul class="space-y-1">
+            <li v-for="link in guideLinks" :key="link.href">
+              <a :href="link.href" class="text-link inline-flex min-h-11 items-center font-semibold">{{ link.label }}</a>
+            </li>
+          </ul>
+        </nav>
         <nav v-if="relatedLinks.length" aria-labelledby="relaterade-tjanster">
           <UiHeading id="relaterade-tjanster" :level="2" size="sm" class="mb-4">
             Relaterade tjänster

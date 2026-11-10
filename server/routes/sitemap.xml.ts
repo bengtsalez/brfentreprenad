@@ -1,9 +1,12 @@
-import { publishedPages } from '#shared/site-structure'
+import { sitemapXml } from '#shared/routes'
 
 /**
- * Teknisk sitemap med publicerade, indexerbara sidor.
+ * Teknisk sitemap med alla publicerade, indexerbara adresser: statiska sidor,
+ * referensprojekt, guider och ortssidor. Listan kommer från shared/routes.ts,
+ * samma register som styr förrendering och länkar. Utkast, byggsidan,
+ * formulärdefinitioner och bokningstjänstens vyer ingår aldrig.
  * Kräver produktionsdomänen i NUXT_PUBLIC_SITE_URL och förrenderas bara då
- * (se nuxt.config.ts). Bokningstjänstens vyer ingår aldrig.
+ * (se nuxt.config.ts).
  */
 export default defineEventHandler((event) => {
   const siteUrl = useRuntimeConfig(event).public.siteUrl.replace(/\/$/, '')
@@ -12,10 +15,6 @@ export default defineEventHandler((event) => {
     throw createError({ statusCode: 404, statusMessage: 'Produktionsdomän saknas' })
   }
 
-  const urls = publishedPages()
-    .map(page => `  <url><loc>${siteUrl}${page.path}</loc></url>`)
-    .join('\n')
-
   setHeader(event, 'Content-Type', 'application/xml; charset=utf-8')
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
+  return sitemapXml(siteUrl)
 })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { sitePages } from '#shared/site-structure'
+import { isPublished, sitePages } from '#shared/site-structure'
 import { brandRelation, legalEntity, office, officeAddress } from '~/content/company'
 import { staff } from '~/content/staff'
 import type { BenefitItem } from '~/types/content'
@@ -8,6 +8,7 @@ usePageSeo({
   title: 'Om BRF Entreprenad',
   description: 'BRF Entreprenad är totalentreprenör för bostadsrättsföreningar, fastighetsförvaltare och fastighetsägare från Halmstad till Falsterbo.',
   path: sitePages.about.path,
+  organization: true,
 })
 
 const { actions } = useSiteNavigation()
@@ -68,7 +69,8 @@ const benefits: BenefitItem[] = [
       :title="`Vårt kontor i ${office.city}`"
       :paragraphs="[`Vårt kontor ligger på ${officeAddress}. Därifrån tar vi uppdrag i området från Halmstad i norr till Falsterbo i söder.`]"
     >
-      <p>
+      <p class="flex flex-wrap gap-x-6 gap-y-2">
+        <a v-if="isPublished(sitePages.serviceArea.path)" :href="sitePages.serviceArea.path" class="text-link font-semibold">Om vårt verksamhetsområde</a>
         <a :href="sitePages.contact.path" class="text-link font-semibold">Kontakta oss</a>
       </p>
     </TextSection>

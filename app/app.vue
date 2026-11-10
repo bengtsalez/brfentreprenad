@@ -1,6 +1,7 @@
 <script setup lang="ts">
 useHead({
-  titleTemplate: (title) => (title ? `${title} · BRF Entreprenad` : 'BRF Entreprenad'),
+  // Varumärket läggs till som ändelse, men inte om titeln redan innehåller det.
+  titleTemplate: title => brandedTitle(title),
 })
 </script>
 

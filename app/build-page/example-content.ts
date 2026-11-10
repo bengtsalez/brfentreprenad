@@ -285,6 +285,7 @@ export const boardControlItems: BoardControlItem[] = [
 /** Påhittat referensprojekt. Får aldrig användas på riktiga sidor. */
 export const caseStudy: CaseStudy = {
   slug: 'exempelprojekt',
+  status: 'draft',
   title: 'Påhittat exempelprojekt',
   location: 'Exempelort',
   clientPublishable: false,

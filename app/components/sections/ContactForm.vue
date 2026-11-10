@@ -191,6 +191,7 @@ async function submitToNetlify(): Promise<'ok' | 'network' | 'server'> {
     'meddelande': values.message.trim(),
     'kallsida': sourcePage.value,
     'foregaende-sida': referrerPath.value,
+    'landningssida': landingPage(),
   })
 
   const controller = new AbortController()
