@@ -251,6 +251,7 @@ const isSent = computed(() => status.value === 'sent' || status.value === 'demo-
       class="space-y-6"
       :aria-busy="status === 'sending' ? 'true' : undefined"
       @submit.prevent="onSubmit"
+      netlify
     >
       <!-- Fälla för spam. Dold för alla och ska lämnas tom. -->
       <p class="hidden" aria-hidden="true">

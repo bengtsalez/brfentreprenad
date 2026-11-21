@@ -19,7 +19,7 @@ export const staff: StaffMember[] = [
   {
     name: 'Aleks Nedeljkovic',
     title: 'Projektchef',
-    responsibility: 'Ansvarar för mark och totalentreprenad.',
+    responsibility: 'Ansvarar för Bygg och totalentreprenad.',
     phone: '079-347 63 00',
     email: 'aleks@brfentreprenad.se',
     image: { src: '/images/team/aleks-800.webp', srcSmall: '/images/team/aleks-400.webp', alt: 'Porträtt av Aleks Nedeljkovic', width: 800, height: 800 },
@@ -35,7 +35,7 @@ export const staff: StaffMember[] = [
   {
     name: 'Henrik Bengtsson',
     title: 'Verksamhetsansvarig Syd',
-    responsibility: 'Ansvarar för totalentreprenader.',
+    responsibility: 'Ansvarar för totalentreprenad.',
     phone: '073-556 03 21',
     email: 'henrik@brfentreprenad.se',
     image: { src: '/images/team/henrik-800.webp', srcSmall: '/images/team/henrik-400.webp', alt: 'Porträtt av Henrik Bengtsson', width: 800, height: 800 },
