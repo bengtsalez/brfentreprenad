@@ -65,12 +65,18 @@ Sidan `/sa-fungerar-servicebokningen/` och alla texter om konto och statusuppfö
 - [ ] Ortssidorna (Landskrona, Helsingborg, Malmö) är utkast tills lokal fakta finns (`UNDERLAG.md`, avsnitt 9).
 - [ ] Bekräfta verksamhetsområdets gränser innan titlar eller texter nämner hela Skåne.
 
-## 4. Mätning (valfritt)
+## 4. Mätning och samtycke
 
-Inget analysverktyg är installerat. Händelserna `phone_click`, `email_click`, `form_start`, `lead_submitted` och `form_error` skickas till `window.dataLayer` om det finns, och som DOM-händelsen `brf:track`. Varje händelse har tjänst, flöde, sida och landningssida (första sidan i besöket, sparad i `sessionStorage`). Inga personuppgifter eller fritexter skickas med.
+Google Tag Manager (GTM-W6DPW3DJ) laddas i `nuxt.config.ts` med Google Consent Mode v2 (advanced). Allt är `denied` tills besökaren väljer i kakbannern (`SiteConsentBanner.vue`, `useConsent.ts`, `shared/consent.ts`). Valet gäller i 12 månader. Sidan `/kakor/` listar kakorna.
 
-- [ ] Välj verktyg (t.ex. Google Tag Manager, Plausible eller Matomo).
-- [ ] Om verktyget sätter kakor eller behandlar personuppgifter: lägg till samtyckeshantering och publicera sidan om kakor (`/kakor/`) innan verktyget aktiveras.
+Händelserna `phone_click`, `email_click`, `form_start`, `lead_submitted` och `form_error` skickas till `window.dataLayer` och som DOM-händelsen `brf:track`. Inga personuppgifter eller fritexter skickas med. När samtycket är känt eller ändras skickas `consent_update` med `consent_analytics` och `consent_marketing`.
+
+- [x] Samtyckeshantering och sidan om kakor (`/kakor/`).
+- [ ] GTM: Admin → Container settings → aktivera **Consent overview**.
+- [ ] GTM: GA4-, Google Ads- och Conversion Linker-taggar använder de inbyggda samtyckeskontrollerna. Lägg inte till "No additional consent required" som åsidosätter dem.
+- [ ] GTM: Alla **Meta**-taggar: "Require additional consent" = `ad_storage` och `ad_user_data`. Bas-pixeln triggas av Custom Event `consent_update` med dataLayer-variabeln `consent_marketing` = `true` (inte All Pages).
+- [ ] GTM: Testa i Tag Assistant att taggarnas samtyckesstatus stämmer före och efter val. Publicera containern.
+- [ ] Nytt verktyg eller ny leverantör i GTM: uppdatera `/kakor/` och höj `CONSENT_VERSION` i `shared/consent.ts`.
 - [ ] Räkna en lead bara på `lead_submitted`. `phone_click` betyder att länken klickats, inte att ett samtal skett.
 
 ## 5. Sökbarhet i drift

@@ -3,6 +3,7 @@ import { brandRelation, companyDetails, legalEntity, phone } from '~/content/com
 
 /** Gemensam ram för publika sidor: hoppa-länk, sidhuvud, innehåll, sidfot och mobilens kontaktlist. */
 const { mainNav, footerNav, footerCompanyNav, inquiryLink } = useSiteNavigation()
+const { openSettings } = useConsent()
 </script>
 
 <template>
@@ -27,7 +28,15 @@ const { mainNav, footerNav, footerCompanyNav, inquiryLink } = useSiteNavigation(
       :contact-details="[...companyDetails, { label: 'Förfrågningar', value: 'Skicka en förfrågan', href: inquiryLink.href }]"
       :legal="`© BRF Entreprenad. ${brandRelation} Org.nr ${legalEntity.orgNumber}.`"
       logo-href="/"
-    />
+    >
+      <template #legal-extra>
+        <button type="button" class="self-start text-ink-muted underline-offset-4 hover:text-ink hover:underline" @click="openSettings">
+          Kakinställningar
+        </button>
+      </template>
+    </SiteFooter>
+
+    <SiteConsentBanner />
 
     <!-- Plats för kontaktlisten, så att den inte täcker sidfotens sista rad. -->
     <div class="theme-dark h-[calc(4.5rem+env(safe-area-inset-bottom))] bg-canvas md:hidden" aria-hidden="true" />

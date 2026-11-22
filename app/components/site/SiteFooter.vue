@@ -80,8 +80,10 @@ withDefaults(defineProps<{
     </UiContainer>
 
     <div class="border-t border-line">
-      <UiContainer class="py-6 text-sm text-ink-muted">
-        {{ legal }}
+      <UiContainer class="flex flex-col gap-3 py-6 text-sm text-ink-muted sm:flex-row sm:items-center sm:justify-between">
+        <p>{{ legal }}</p>
+        <!-- T.ex. knappen "Kakinställningar". -->
+        <slot name="legal-extra" />
       </UiContainer>
     </div>
   </footer>

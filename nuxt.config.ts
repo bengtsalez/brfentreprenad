@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from '@tailwindcss/vite'
+import { consentBootstrapScript } from './shared/consent.ts'
 import { publishedRoutes, unpublishedPaths } from './shared/routes.ts'
 
 // Projektet har inte @types/node, så process deklareras här.
@@ -32,18 +33,18 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { lang: 'sv' },
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
-      // Google Tag Manager. tagPriority: 'critical' lägger skripten först i <head>.
+      // Samtycke (Consent Mode v2) sätts före Google Tag Manager, se shared/consent.ts.
+      // Inline-skriptet körs direkt, gtm.js laddas async och läser samtycket när det körs.
+      // tagPriority lägger skripten först i <head>, i den här ordningen.
       script: [
+        {
+          innerHTML: consentBootstrapScript(),
+          tagPriority: -20,
+        },
         {
           src: 'https://www.googletagmanager.com/gtm.js?id=GTM-W6DPW3DJ',
           async: true,
-          tagPriority: 'critical',
-        },
-        {
-          innerHTML: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());`,
-          tagPriority: 'critical',
+          tagPriority: -10,
         },
       ],
     },
@@ -51,7 +52,8 @@ gtag('js', new Date());`,
 
   // Tomma värden betyder att funktionen inte finns ännu. Sätts med
   // NUXT_PUBLIC_SITE_URL, NUXT_PUBLIC_BOOKING_URL och NUXT_PUBLIC_ACCOUNT_URL.
-  // Google Tag Manager laddas i app.head ovan. Se app/composables/useTracking.ts.
+  // Google Tag Manager laddas i app.head ovan. Se app/composables/useTracking.ts
+  // och app/composables/useConsent.ts.
   runtimeConfig: {
     public: {
       siteUrl,

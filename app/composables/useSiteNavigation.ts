@@ -70,6 +70,7 @@ export function useSiteNavigation() {
     sitePages.about.path,
     sitePages.contact.path,
     sitePages.privacy.path,
+    sitePages.cookies.path,
   ])
 
   return {

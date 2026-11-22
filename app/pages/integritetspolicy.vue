@@ -10,7 +10,7 @@ usePageSeo({
 })
 
 const privacyEmail = 'jonas@byggproffsskane.se'
-const updated = '3 november 2026'
+const updated = '22 november 2026'
 </script>
 
 <template>
@@ -55,6 +55,18 @@ const updated = '3 november 2026'
         'Formulären tas emot via Netlify, som lagrar inskicken åt oss. Netlify är ett amerikanskt företag. Överföringen till USA sker med de skyddsåtgärder som dataskyddsförordningen kräver. Förfrågningar kan även sparas i vår e-post och i vårt eget kundregister.',
       ]"
     />
+
+    <TextSection
+      title="Mätning och annonsering"
+      :paragraphs="[
+        'Om du samtycker använder vi Google Analytics för statistik och Google Ads och Meta för att mäta och anpassa annonser. Då behandlar Google och Meta uppgifter om ditt besök, till exempel vilka sidor du besöker, din IP-adress och vilken annons du kom från. Den rättsliga grunden är ditt samtycke, som du kan ändra när som helst.',
+        'Det du skriver i en förfrågan skickas aldrig till Google eller Meta. De får bara veta att en förfrågan har skickats och vilken tjänst den gällde.',
+      ]"
+    >
+      <p>
+        <a :href="sitePages.cookies.path" class="text-link">Läs mer om kakor och ändra ditt val</a>
+      </p>
+    </TextSection>
 
     <TextSection
       title="Hur länge uppgifterna sparas"

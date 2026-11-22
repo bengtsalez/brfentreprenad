@@ -64,7 +64,7 @@ Komponenterna registreras automatiskt på filnamnet, oavsett mapp (`ui/UiButton.
 
 - `published`: byggs, länkas i menyer och tas med i `sitemap.xml`.
 - `planned`: ingår i målbilden men saknar innehåll eller underlag (t.ex. undertjänster och servicebokningen, som beskriver ett konto som inte finns ännu).
-- `unconfirmed`: erbjudandet eller uppgifterna måste bekräftas först (installationer och teknik, kakor).
+- `unconfirmed`: erbjudandet eller uppgifterna måste bekräftas först (installationer och teknik).
 
 Menyer, sidfot och listor filtrerar bort allt som inte är publicerat, så det finns inga länkar till tomma sidor. Opublicerade sidor förrenderas inte (`nitro.prerender.ignore` i `nuxt.config.ts`) och ger 404.
 

@@ -144,8 +144,9 @@ export const sitePages = {
   cookies: {
     path: '/kakor/',
     title: 'Kakor',
-    summary: 'Anpassas till de kakor och mätverktyg som faktiskt används.',
-    status: 'unconfirmed',
+    summary: 'Vilka kakor webbplatsen använder och hur du ändrar ditt samtycke.',
+    status: 'published',
+    stage: 1,
   },
 } satisfies Record<string, SitePage>
 

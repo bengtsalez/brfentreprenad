@@ -1,3 +1,4 @@
+import { readStoredConsent } from '#shared/consent'
 import type { InquiryFlow } from '~/types/content'
 
 /**
@@ -33,10 +34,13 @@ const LANDING_KEY = 'brf:landningssida'
 
 /**
  * Första sidan i besöket (sökväg utan query). Sparas i sessionStorage, som
- * töms när fliken stängs. Ingen identitet eller kaka skapas.
+ * töms när fliken stängs. Ingen identitet eller kaka skapas. Lagringen sker i
+ * mätsyfte och kräver därför samtycke till statistik (se useConsent.ts).
+ * Utan samtycke används aktuell sida.
  */
 export function landingPage(): string {
   if (import.meta.server) return ''
+  if (!readStoredConsent()?.analytics) return window.location.pathname
   try {
     const stored = window.sessionStorage.getItem(LANDING_KEY)
     if (stored) return stored
