@@ -44,7 +44,7 @@ const benefits: BenefitItem[] = [
     <TextSection
       title="Service och renovering under ett ansvar"
       :paragraphs="[
-        'Vi arbetar brett inom bygg, från konkreta servicearbeten till större renoveringar. Samma part kan därför hantera både den enskilda reparationen och det större projektet.',
+        'BRF Entreprenad samlar 12 företag under samma varumärke.Vi arbetar brett inom bygg, från konkreta servicearbeten till större renoveringar. Samma part kan därför hantera både den enskilda reparationen och det större projektet.',
         'Som totalentreprenör tar vi helhetsansvar för uppdraget. Vid större projekt får ni en personlig projektledare som samordnar arbetet och håller er informerade.',
         `${brandRelation} Organisationsnummer: ${legalEntity.orgNumber}.`,
       ]"

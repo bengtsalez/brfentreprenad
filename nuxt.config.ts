@@ -32,12 +32,26 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { lang: 'sv' },
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+      // Google Tag Manager. tagPriority: 'critical' lägger skripten först i <head>.
+      script: [
+        {
+          src: 'https://www.googletagmanager.com/gtm.js?id=GTM-W6DPW3DJ',
+          async: true,
+          tagPriority: 'critical',
+        },
+        {
+          innerHTML: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());`,
+          tagPriority: 'critical',
+        },
+      ],
     },
   },
 
   // Tomma värden betyder att funktionen inte finns ännu. Sätts med
   // NUXT_PUBLIC_SITE_URL, NUXT_PUBLIC_BOOKING_URL och NUXT_PUBLIC_ACCOUNT_URL.
-  // Ingen analystjänst är aktiverad. Se app/composables/useTracking.ts.
+  // Google Tag Manager laddas i app.head ovan. Se app/composables/useTracking.ts.
   runtimeConfig: {
     public: {
       siteUrl,

@@ -3,8 +3,8 @@ import type { InquiryFlow } from '~/types/content'
 /**
  * Gemensam mätning av kontakthändelser.
  *
- * Inget analysverktyg är installerat. Händelserna skickas till `window.dataLayer`
- * om ett verktyg (t.ex. Google Tag Manager) läggs till senare, och som
+ * Google Tag Manager (GTM-W6DPW3DJ) laddas i nuxt.config.ts. Händelserna skickas till `window.dataLayer`
+ * så att GTM kan fånga dem, och som
  * DOM-händelsen `brf:track` så att de går att följa och testa. Inga ID:n eller
  * externa skript läggs in här.
  *
